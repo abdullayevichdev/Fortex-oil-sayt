@@ -38,23 +38,34 @@ export const saveOrder = (order: Order) => {
   const orders = getOrders();
   orders.push(order);
   localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
-  
-  // Update pseudo-sales stats on product (in a real app this would be more complex)
+
+  // Update sales stats and DECREMENT STOCK
   const products = getProducts();
   order.items.forEach(item => {
-    const prod = products.find(p => p.id === item.product.id);
-    if (prod) {
+    const prodIndex = products.findIndex(p => p.id === item.product.id);
+    if (prodIndex >= 0) {
+      const prod = products[prodIndex];
+      // Update sales
       prod.sales = (prod.sales || 0) + item.quantity;
+
+      // Decrement stock if it exists
+      if (prod.stock) {
+        const literIndex = prod.liters.indexOf(item.selectedLiter);
+        if (literIndex >= 0 && prod.stock[literIndex] !== undefined) {
+          prod.stock[literIndex] = Math.max(0, prod.stock[literIndex] - item.quantity);
+        }
+      }
+      products[prodIndex] = prod;
     }
   });
   localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
 };
 
 export const updateOrderStatus = (id: string, status: Order['status']) => {
-    const orders = getOrders();
-    const order = orders.find(o => o.id === id);
-    if(order) {
-        order.status = status;
-        localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
-    }
+  const orders = getOrders();
+  const order = orders.find(o => o.id === id);
+  if (order) {
+    order.status = status;
+    localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+  }
 }

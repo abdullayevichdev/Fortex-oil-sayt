@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Globe } from 'lucide-react';
+import { ShoppingCart, Menu, X, Globe, User } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useAuth } from '../contexts/AuthContext';
 
 interface NavbarProps {
   cartCount: number;
@@ -12,6 +13,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const { t, language, setLanguage } = useLanguage();
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -76,6 +78,11 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
                 </span>
               )}
             </Link>
+
+            {/* Profile Link */}
+            <Link to={user ? "/profile" : "/auth"} className={`relative p-3 rounded-full transition duration-300 group ${user ? 'bg-fortex-primary hover:bg-blue-500 shadow-lg shadow-blue-600/30' : 'bg-white/10 hover:bg-white/20'}`}>
+              <User size={24} className="text-white group-hover:scale-110 transition duration-300" />
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -93,6 +100,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
             <Link to="/products" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('products')}</Link>
             <Link to="/services" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('services')}</Link>
             <Link to="/cart" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('cart')} ({cartCount})</Link>
+            <Link to={user ? "/profile" : "/auth"} className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{user ? "Mening Profilim" : "Kirish / Ro'yxatdan o'tish"}</Link>
             <Link to="/admin" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('admin')}</Link>
 
             <div className="pt-4 border-t border-gray-800">

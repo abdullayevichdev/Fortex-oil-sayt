@@ -9,6 +9,10 @@ import Products from './pages/Products';
 import Cart from './pages/Cart';
 import Services from './pages/Services';
 import Admin from './pages/Admin';
+import Auth from './pages/Auth';
+import Profile from './pages/Profile';
+import { LanguageProvider } from './contexts/LanguageContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 const Layout: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -81,6 +85,8 @@ const Layout: React.FC = () => {
           <Route path="/cart" element={<Cart cart={cart} updateQuantity={updateCartQuantity} clearCart={clearCart} />} />
           <Route path="/services" element={<Services />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
       {!isAdmin && <Footer />}
@@ -88,14 +94,14 @@ const Layout: React.FC = () => {
   );
 };
 
-import { LanguageProvider } from './contexts/LanguageContext';
-
 const App: React.FC = () => {
   return (
     <LanguageProvider>
-      <Router>
-        <Layout />
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Layout />
+        </Router>
+      </AuthProvider>
     </LanguageProvider>
   );
 };

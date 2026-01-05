@@ -18,12 +18,9 @@ const Home: React.FC<HomeProps> = ({ products, addToCart }) => {
       {/* Hero Section */}
       <div className="relative h-screen min-h-[600px] flex items-center overflow-hidden bg-fortex-dark text-white">
         {/* Animated Background */}
+        {/* Animated Background - Removed */}
         <div className="absolute inset-0 z-0 opacity-30 animate-scale-in" style={{ animationDuration: '10s' }}>
-          <img
-            src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
-            alt=""
-            className="w-full h-full object-cover"
-          />
+          <div className="w-full h-full bg-gradient-to-br from-blue-900 via-slate-900 to-black"></div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-fortex-dark via-fortex-dark/90 to-transparent z-10"></div>
 

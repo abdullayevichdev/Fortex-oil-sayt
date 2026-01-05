@@ -4,6 +4,7 @@ export interface Product {
   category: 'Motor Oil' | 'Transmission Oil' | 'ATF' | 'Hydraulic Oil' | 'Antifreeze';
   liters: string[];
   price_uzs: number[]; // Corresponds to liters index
+  stock?: number[]; // Corresponds to liters index
   image_url: string;
   description: string;
   tags: string[];
@@ -11,6 +12,8 @@ export interface Product {
     title: string;
     meta_description: string;
   };
+  reviews?: Review[];
+  rating?: number;
   telegram_bot: {
     buy_button: boolean;
     status_sequence: string[];
@@ -71,3 +74,12 @@ export const COMPANY_INFO = {
   card: "9860 1701 1369 9921",
   email: "info@fortex.uz"
 };
+
+export interface Review {
+  id: string;
+  userId: string;
+  userName: string;
+  rating: number; // 1-5
+  comment: string;
+  date: string;
+}

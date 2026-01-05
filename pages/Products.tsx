@@ -4,6 +4,7 @@ import ProductCard from '../components/ProductCard';
 import Modal from '../components/Modal';
 import { Search, Filter, Layers } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { sendReviewToTelegram } from '../services/telegram';
 
 interface ProductsProps {
   products: Product[];
@@ -15,7 +16,46 @@ const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedLiterForModal, setSelectedLiterForModal] = useState<string>('');
+  const [reviewForm, setReviewForm] = useState({ name: '', rating: 5, comment: '' });
+  const [isReviewSubmitting, setIsReviewSubmitting] = useState(false);
   const { t } = useLanguage();
+
+  const handleReviewSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedProduct) return;
+    setIsReviewSubmitting(true);
+
+    const newReview = {
+      id: `rev_${Date.now()}`,
+      userId: 'guest',
+      userName: reviewForm.name,
+      rating: reviewForm.rating,
+      comment: reviewForm.comment,
+      date: new Date().toISOString()
+    };
+
+    // Send to Telegram using the shared service
+    try {
+      await sendReviewToTelegram(newReview, selectedProduct.name);
+
+      // Optimistic update
+      const updatedProduct = {
+        ...selectedProduct,
+        reviews: [newReview, ...(selectedProduct.reviews || [])],
+        rating: ((selectedProduct.rating || 5) * (selectedProduct.reviews?.length || 0) + reviewForm.rating) / ((selectedProduct.reviews?.length || 0) + 1)
+      };
+      setSelectedProduct(updatedProduct);
+      alert("Izohingiz uchun rahmat!");
+      setReviewForm({ name: '', rating: 5, comment: '' });
+    } catch (e: any) {
+      console.error(e);
+      // We don't need another alert here if the service already alerts, 
+      // but let's keep a generic one just in case the error is local
+      alert(`Xatolik: ${e.message || "Tizim xatosi"}`);
+    } finally {
+      setIsReviewSubmitting(false);
+    }
+  };
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
@@ -41,12 +81,9 @@ const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
       {/* Hero Section - Matching Home Page Style */}
       <div className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 bg-fortex-dark text-white overflow-hidden">
         {/* Animated Background */}
+        {/* Animated Background - Removed */}
         <div className="absolute inset-0 z-0 opacity-40 animate-scale-in" style={{ animationDuration: '20s' }}>
-          <img
-            src="https://images.unsplash.com/photo-1605218457297-7c3fdf936082?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
-            alt=""
-            className="w-full h-full object-cover"
-          />
+          <div className="w-full h-full bg-gradient-to-tr from-cyan-900 via-slate-900 to-blue-900"></div>
         </div>
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-fortex-dark/50 via-fortex-dark/90 to-slate-50 z-10"></div>
@@ -168,9 +205,69 @@ const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
               </div>
 
               <div className="mb-8">
-                <h3 className="font-bold text-slate-800 mb-2">{t('description')}</h3>
                 <p className="text-gray-600 leading-relaxed text-sm">{selectedProduct.description}</p>
               </div>
+
+              {/* Reviews Section */}
+              <div className="mb-6 border-t border-gray-100 pt-6">
+                <h3 className="font-bold text-slate-800 mb-4 flex items-center justify-between">
+                  <span>Mijozlar Fikri ({selectedProduct.reviews?.length || 0})</span>
+                  <span className="text-yellow-500 flex items-center text-sm">
+                    ⭐ {selectedProduct.rating?.toFixed(1) || '0.0'}
+                  </span>
+                </h3>
+
+                {/* Review List */}
+                <div className="space-y-4 max-h-40 overflow-y-auto pr-2 mb-4 scrollbar-thin">
+                  {selectedProduct.reviews && selectedProduct.reviews.length > 0 ? (
+                    selectedProduct.reviews.map(review => (
+                      <div key={review.id} className="bg-gray-50 p-3 rounded-xl text-sm">
+                        <div className="flex justify-between mb-1">
+                          <span className="font-bold text-slate-800">{review.userName}</span>
+                          <span className="text-yellow-500 text-xs">{'⭐'.repeat(review.rating)}</span>
+                        </div>
+                        <p className="text-gray-600">{review.comment}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-400 text-sm italic">Hozircha izohlar yo'q. Birinchi bo'lib fikr bildiring!</p>
+                  )}
+                </div>
+              </div>
+
+
+
+              {/* Add Review Form */}
+              <form onSubmit={handleReviewSubmit} className="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                <h4 className="font-bold text-sm mb-3">Izoh qoldirish</h4>
+                <div className="space-y-3">
+                  <input
+                    required
+                    className="w-full text-sm p-2 border rounded-lg outline-none focus:border-fortex-primary"
+                    placeholder="Ismingiz"
+                    value={reviewForm.name}
+                    onChange={e => setReviewForm({ ...reviewForm, name: e.target.value })}
+                  />
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-gray-500">Baho:</span>
+                    {[1, 2, 3, 4, 5].map(star => (
+                      <button type="button" key={star} onClick={() => setReviewForm({ ...reviewForm, rating: star })} className="text-lg focus:outline-none transition hover:scale-110">
+                        {star <= reviewForm.rating ? '⭐' : '☆'}
+                      </button>
+                    ))}
+                  </div>
+                  <textarea
+                    required
+                    className="w-full text-sm p-2 border rounded-lg outline-none focus:border-fortex-primary h-20 resize-none"
+                    placeholder="Fikringiz..."
+                    value={reviewForm.comment}
+                    onChange={e => setReviewForm({ ...reviewForm, comment: e.target.value })}
+                  />
+                  <button type="submit" disabled={isReviewSubmitting} className="w-full bg-slate-800 text-white py-2 rounded-lg text-sm font-bold hover:bg-slate-700 transition">
+                    {isReviewSubmitting ? 'Yuborilmoqda...' : 'Yuborish'}
+                  </button>
+                </div>
+              </form>
 
               <div className="flex gap-4">
                 <button
@@ -184,10 +281,10 @@ const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
                 </button>
               </div>
             </div>
-          </div>
+          </div >
         )}
-      </Modal>
-    </div>
+      </Modal >
+    </div >
   );
 };
 

@@ -1,4 +1,4 @@
-import { Order, Booking } from '../types';
+import { Order, Booking, Review } from '../types';
 
 // SIZNING BOT TOKENINGIZ
 const BOT_TOKEN = '7854422433:AAGpX1AjPOYDChjfIUV3bC3J6IX_ZDaArm4';
@@ -100,5 +100,53 @@ export const sendBookingToTelegram = async (booking: Booking) => {
     }
   } catch (error) {
     console.error("Booking telegramga yuborilmadi:", error);
+  }
+};
+
+// Helper to escape HTML characters
+const escapeHtml = (unsafe: string) => {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+export const sendReviewToTelegram = async (review: Review, productName: string) => {
+  if (!CHAT_IDS || CHAT_IDS.length === 0) return;
+
+  let message = `⭐ <b>YANGI IZOH (REVIEW)</b>\n\n`;
+  message += `📦 <b>Mahsulot:</b> ${escapeHtml(productName)}\n`;
+  message += `👤 <b>Mijoz:</b> ${escapeHtml(review.userName)}\n`;
+  message += `⭐️ <b>Baho:</b> ${'⭐️'.repeat(review.rating)}\n`;
+  message += `💬 <b>Izoh:</b> ${escapeHtml(review.comment)}\n`;
+  message += `📅 <b>Sana:</b> ${new Date(review.date).toLocaleString()}`;
+
+  console.log("Telegramga yuborilayotgan xabar:", message);
+
+  try {
+    for (const chatId of CHAT_IDS) {
+      const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message,
+          parse_mode: 'HTML'
+        })
+      });
+      const data = await response.json();
+      if (!data.ok) {
+        console.error("Telegram API Error:", data);
+        alert(`Telegram Xatosi (${data.error_code}): ${data.description}`);
+      } else {
+        console.log("Telegramga muvaffaqiyatli yuborildi:", chatId);
+      }
+    }
+  } catch (error: any) {
+    console.error("Izoh telegramga yuborilmadi:", error);
+    alert(`Xatolik: ${error.message}`);
+    throw error;
   }
 };
