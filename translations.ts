@@ -1,0 +1,227 @@
+export const translations = {
+    uz: {
+        // Navbar
+        home: "Bosh Sahifa",
+        products: "Mahsulotlar",
+        services: "Xizmatlar",
+        cart: "Savatcha",
+        admin: "Admin",
+        contact: "Bog'lanish",
+
+        // Hero
+        hero_badge: "№1 Avtomobil Moylar Markazi",
+        hero_title_1: "Dvigatelingiz Uchun",
+        hero_title_2: "Mukammal Himoya",
+        hero_desc: "Bizning premium toifadagi motor moylarimiz dvigatelingizning ishlash muddatini uzaytiradi va maksimal quvvatni ta'minlaydi.",
+        hero_btn_catalog: "Katalogga O'tish",
+        hero_btn_location: "Manzilimiz",
+
+        // Features
+        feat_1_title: "100% Asl Mahsulot",
+        feat_1_desc: "Biz faqat sertifikatlangan va tekshirilgan brendlarning asl mahsulotlarini taklif etamiz.",
+        feat_2_title: "Tezkor Yetkazib Berish",
+        feat_2_desc: "Buyurtmangizni qisqa vaqt ichida manzilingizga xavfsiz yetkazib beramiz.",
+        feat_3_title: "Professional Maslahat",
+        feat_3_desc: "Mutaxassislarimiz avtomobilingiz uchun eng mos moyni tanlashda yordam berishadi.",
+
+        // Oil Selector
+        os_badge: "Professional Tanlov",
+        os_title: "Moy Tanlash Yordamchisi",
+        os_desc: "Avtomobilingizni tanlang va biz unga eng mos keladigan moyni tavsiya qilamiz.",
+        os_brand: "Avtomobil Rusumi",
+        os_model: "Modeli",
+        os_select: "Tanlang...",
+        os_select_brand_first: "Avval rusumni tanlang...",
+        os_btn: "Moyni Topish",
+        os_analyzing: "Tahlil qilinmoqda...",
+        os_success_title: "Ajoyib Tanlov!",
+        os_success_desc: "Sizning {car} avtomobilingiz uchun tavsiyamiz:",
+        os_price_from: "UZS dan",
+        os_add_cart: "Savatga Qo'shish",
+
+        // Products Page
+        prod_badge: "Premium Katalog",
+        prod_title: "Barcha",
+        prod_title_accent: "Mahsulotlar",
+        prod_desc: "Avtomobilingiz uchun eng mos keluvchi yuqori sifatli moylash vositalarini saralab oldik. Sifat va ishonch kafolatlangan.",
+        prod_all: "Barchasi",
+        prod_search_placeholder: "Mahsulot qidirish...",
+        prod_not_found: "Hech narsa topilmadi",
+        prod_not_found_desc: "Qidiruv so'zini o'zgartirib ko'ring yoki boshqa toifani tanlang.",
+
+        // Product Card / Modal
+        sale: "CHEGIRMA",
+        new: "YANGI",
+        price_start: "Boshlang'ich narx:",
+        view: "Ko'rish",
+        description: "Tavsif:",
+        available_sizes: "Mavjud hajmlar:",
+        product_details: "Mahsulot Tafsilotlari",
+        add_to_cart: "Savatga Qo'shish",
+        size: "Hajm",
+
+        // Cart
+        cart_title: "Sizning Savatchangiz",
+        cart_empty: "Savatcha Bo'sh",
+        cart_empty_desc: "Avtomobilingiz uchun eng yaxshi moylarni tanlash uchun katalogga o'ting.",
+        cart_back: "Mahsulotlarni Ko'rish",
+        cart_clear: "Savatchani Tozalash",
+        cart_checkout: "Buyurtmani Rasmiylashtirish",
+        cart_total: "Jami summa:",
+        cart_form_name: "To'liq Ism",
+        cart_form_phone: "Telefon Raqam",
+        cart_form_payment: "To'lov Turi",
+        cart_cash: "Naqd Pul",
+        cart_card: "Karta",
+        cart_card_desc: "Fortex MCHJ hisob raqami",
+        cart_submit: "Buyurtmani Tasdiqlash",
+        cart_submitting: "Yuborilmoqda...",
+        cart_success_title: "Buyurtma Qabul Qilindi!",
+        cart_success_desc: "Sizning buyurtmangiz muvaffaqiyatli rasmiylashtirildi. Tez orada administratorlarimiz siz bilan bog'lanishadi. Chek avtomatik yuklab olindi.",
+        cart_home_btn: "Bosh Sahifaga Qaytish",
+        order_id: "Buyurtma ID:",
+        items_suffix: "ta mahsulot",
+        remove: "O'chirish",
+
+        // Services
+        serv_title: "Avtomobil Xizmatlari",
+        serv_subtitle: "Professional xizmat ko'rsatish markazi",
+        serv_desc: "Bizning servis markazimizda malakali ustalar sizning avtomobilingizga sifatli xizmat ko'rsatishadi.",
+        serv_oil_change: "Moy Almashtirish",
+        serv_oil_desc: "Dvigatel va karobka moylarini professional almashtirish.",
+        serv_filter: "Filtrlarni Almashtirish",
+        serv_filter_desc: "Havo, salon va moy filtrlari.",
+        serv_diagnostics: "Diagnostika",
+        serv_diagnostics_desc: "Avtomobil holatini tekshirish.",
+        serv_book_title: "Qabulga Yozilish",
+        serv_form_car: "Avtomobil Rusumi va Modeli",
+        serv_form_date: "Qulay Vaqt",
+        serv_form_type: "Xizmat Turi",
+        serv_submit: "Yozilish",
+
+        // Footer
+        footer_desc: "Sifatli motor moylari va avtomobil texnik suyuqliklari.",
+        footer_about_desc: "Avtomobilingiz uchun eng yuqori sifatli moylash vositalari. Bizning mahsulotlar dvigatelingiz uzoq va ishonchli xizmat qilishini ta'minlaydi.",
+        footer_view_products: "Mahsulotlarni ko'rish",
+        footer_links: "Biz haqimizda",
+        footer_contact_title: "Biz bilan aloqa",
+        footer_social_title: "Ijtimoiy Tarmoqlar",
+        footer_social_desc: "Yangiliklar va aksiyalardan xabardor bo'lish uchun bizga qo'shiling.",
+        footer_contact: "Bog'lanish",
+        footer_rights: "Fortex. Barcha huquqlar himoyalangan."
+    },
+    ru: {
+        // Navbar
+        home: "Главная",
+        products: "Продукты",
+        services: "Услуги",
+        cart: "Корзина",
+        admin: "Админ",
+        contact: "Контакты",
+
+        // Hero
+        hero_badge: "№1 Центр Автомасел",
+        hero_title_1: "Идеальная Защита",
+        hero_title_2: "Вашего Двигателя",
+        hero_desc: "Наши моторные масла премиум-класса продлевают срок службы двигателя и обеспечивают максимальную мощность.",
+        hero_btn_catalog: "В Каталог",
+        hero_btn_location: "Наш Адрес",
+
+        // Features
+        feat_1_title: "100% Оригинал",
+        feat_1_desc: "Мы предлагаем только оригинальные продукты от сертифицированных и проверенных брендов.",
+        feat_2_title: "Быстрая Доставка",
+        feat_2_desc: "Мы безопасно доставим ваш заказ по вашему адресу в кратчайшие сроки.",
+        feat_3_title: "Профессиональная Консультация",
+        feat_3_desc: "Наши специалисты помогут подобрать наиболее подходящее масло для вашего автомобиля.",
+
+        // Oil Selector
+        os_badge: "Профессиональный Выбор",
+        os_title: "Подбор Масла",
+        os_desc: "Выберите свой автомобиль, и мы порекомендуем наиболее подходящее масло.",
+        os_brand: "Марка Авто",
+        os_model: "Модель",
+        os_select: "Выберите...",
+        os_select_brand_first: "Сначала выберите марку...",
+        os_btn: "Найти Масло",
+        os_analyzing: "Анализ...",
+        os_success_title: "Отличный Выбор!",
+        os_success_desc: "Для вашего {car} мы рекомендуем:",
+        os_price_from: "от UZS",
+        os_add_cart: "В Корзину",
+
+        // Products Page
+        prod_badge: "Премиум Каталог",
+        prod_title: "Все",
+        prod_title_accent: "Продукты",
+        prod_desc: "Мы отобрали самые качественные смазочные материалы для вашего автомобиля. Качество и надежность гарантированы.",
+        prod_all: "Все",
+        prod_search_placeholder: "Поиск продукта...",
+        prod_not_found: "Ничего не найдено",
+        prod_not_found_desc: "Попробуйте изменить поисковый запрос или выбрать другую категорию.",
+
+        // Product Card / Modal
+        sale: "СКИДКА",
+        new: "НОВИНКА",
+        price_start: "Цена от:",
+        view: "Просмотр",
+        description: "Описание:",
+        available_sizes: "Доступные объемы:",
+        product_details: "Детали Продукта",
+        add_to_cart: "В Корзину",
+        size: "Объем",
+
+        // Cart
+        cart_title: "Ваша Корзина",
+        cart_empty: "Корзина пуста",
+        cart_empty_desc: "Перейдите в каталог, чтобы выбрать лучшие масла для вашего автомобиля.",
+        cart_back: "Посмотреть продукты",
+        cart_clear: "Очистить корзину",
+        cart_checkout: "Оформление заказа",
+        cart_total: "Общая сумма:",
+        cart_form_name: "Полное Имя",
+        cart_form_phone: "Номер Телефона",
+        cart_form_payment: "Способ Оплаты",
+        cart_cash: "Наличные",
+        cart_card: "Карта",
+        cart_card_desc: "Счет Fortex MCHJ",
+        cart_submit: "Подтвердить Заказ",
+        cart_submitting: "Отправка...",
+        cart_success_title: "Заказ Принят!",
+        cart_success_desc: "Ваш заказ успешно оформлен. Наши администраторы свяжутся с вами в ближайшее время. Чек загружен автоматически.",
+        cart_home_btn: "Вернуться на Главную",
+        order_id: "ID Заказа:",
+        items_suffix: "товаров",
+        remove: "Удалить",
+
+        // Services
+        serv_title: "Автосервис",
+        serv_subtitle: "Профессиональный сервис центр",
+        serv_desc: "В нашем сервисном центре квалифицированные мастера качественно обслужат ваш автомобиль.",
+        serv_oil_change: "Замена Масла",
+        serv_oil_desc: "Профессиональная замена масла в двигателе и КПП.",
+        serv_filter: "Замена Фильтров",
+        serv_filter_desc: "Воздушные, салонные и масляные фильтры.",
+        serv_diagnostics: "Диагностика",
+        serv_diagnostics_desc: "Проверка состояния автомобиля.",
+        serv_book_title: "Запись на Прием",
+        serv_form_car: "Марка и Модель Авто",
+        serv_form_date: "Удобное Время",
+        serv_form_type: "Тип Услуги",
+        serv_submit: "Записаться",
+
+        // Footer
+        footer_desc: "Качественные моторные масла и автомобильные технические жидкости.",
+        footer_about_desc: "Самые качественные смазочные материалы для вашего автомобиля. Наши продукты обеспечивают долгую и надежную работу вашего двигателя.",
+        footer_view_products: "Посмотреть продукты",
+        footer_links: "О нас",
+        footer_contact_title: "Свяжитесь с нами",
+        footer_social_title: "Социальные сети",
+        footer_social_desc: "Присоединяйтесь к нам, чтобы быть в курсе новостей и акций.",
+        footer_contact: "Контакты",
+        footer_rights: "Fortex. Все права защищены."
+    }
+};
+
+export type Language = 'uz' | 'ru';
+export type TranslationKey = keyof typeof translations.uz;

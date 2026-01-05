@@ -40,6 +40,14 @@ export interface Order {
   date: string;
 }
 
+export interface Booking {
+  name: string;
+  phone: string;
+  carModel: string;
+  serviceType: string;
+  date: string;
+}
+
 export interface AdminStats {
   totalOrders: number;
   totalRevenue: number;

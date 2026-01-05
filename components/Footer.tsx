@@ -2,27 +2,29 @@ import React from 'react';
 import { MapPin, Phone, Mail, Send, Instagram, ArrowRight } from 'lucide-react';
 import { COMPANY_INFO } from '../types';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-fortex-dark text-gray-400 pt-16 pb-8 border-t border-gray-800">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Company Info */}
           <div className="animate-fade-in">
-             <h3 className="text-2xl font-black italic text-white mb-6">FORTEX<span className="text-fortex-red">.UZ</span></h3>
-             <p className="mb-6 leading-relaxed">
-               Avtomobilingiz uchun eng yuqori sifatli moylash vositalari. 
-               Bizning mahsulotlar dvigatelingiz uzoq va ishonchli xizmat qilishini ta'minlaydi.
-             </p>
-             <Link to="/products" className="inline-flex items-center text-fortex-primary font-bold hover:text-blue-400 transition">
-               Mahsulotlarni ko'rish <ArrowRight size={16} className="ml-2" />
-             </Link>
+            <h3 className="text-2xl font-black italic text-white mb-6">FORTEX<span className="text-fortex-red">.UZ</span></h3>
+            <p className="mb-6 leading-relaxed">
+              {t('footer_about_desc')}
+            </p>
+            <Link to="/products" className="inline-flex items-center text-fortex-primary font-bold hover:text-blue-400 transition">
+              {t('footer_view_products')} <ArrowRight size={16} className="ml-2" />
+            </Link>
           </div>
 
           {/* Contacts */}
-          <div className="animate-fade-in" style={{animationDelay: '0.1s'}}>
-            <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-wider">Biz bilan aloqa</h3>
+          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-wider">{t('footer_contact_title')}</h3>
             <ul className="space-y-4">
               <li className="flex items-start group">
                 <MapPin size={20} className="mr-3 text-fortex-primary group-hover:text-white transition mt-1" />
@@ -30,13 +32,13 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center group">
                 <div className="bg-white/5 p-2 rounded-full mr-3 group-hover:bg-green-500 transition-all duration-300 group-hover:scale-110">
-                    <Phone size={18} className="text-fortex-primary group-hover:text-white transition" />
+                  <Phone size={18} className="text-fortex-primary group-hover:text-white transition" />
                 </div>
-                <a 
-                    href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`} 
-                    className="hover:text-white transition-all duration-300 font-bold text-lg group-hover:translate-x-1"
+                <a
+                  href={`tel:${COMPANY_INFO.phone.replace(/\s/g, '')}`}
+                  className="hover:text-white transition-all duration-300 font-bold text-lg group-hover:translate-x-1"
                 >
-                    {COMPANY_INFO.phone}
+                  {COMPANY_INFO.phone}
                 </a>
               </li>
               <li className="flex items-center group">
@@ -47,9 +49,9 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Socials */}
-          <div className="animate-fade-in" style={{animationDelay: '0.2s'}}>
-            <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-wider">Ijtimoiy Tarmoqlar</h3>
-            <p className="mb-6 text-sm">Yangiliklar va aksiyalardan xabardor bo'lish uchun bizga qo'shiling.</p>
+          <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-wider">{t('footer_social_title')}</h3>
+            <p className="mb-6 text-sm">{t('footer_social_desc')}</p>
             <div className="flex space-x-4">
               <a href={COMPANY_INFO.telegram} target="_blank" rel="noreferrer" className="bg-blue-500 hover:bg-blue-600 p-3 rounded-full text-white transition transform hover:scale-110 shadow-lg shadow-blue-500/30">
                 <Send size={22} />
@@ -62,11 +64,11 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
-          <p>© {new Date().getFullYear()} Fortex. Barcha huquqlar himoyalangan.</p>
+          <p>© {new Date().getFullYear()} {t('footer_rights')}</p>
           <div className="mt-4 md:mt-0 space-x-6">
-            <Link to="/" className="hover:text-white transition">Bosh Sahifa</Link>
-            <Link to="/products" className="hover:text-white transition">Mahsulotlar</Link>
-            <Link to="/admin" className="hover:text-white transition">Admin</Link>
+            <Link to="/" className="hover:text-white transition">{t('home')}</Link>
+            <Link to="/products" className="hover:text-white transition">{t('products')}</Link>
+            <Link to="/admin" className="hover:text-white transition">{t('admin')}</Link>
           </div>
         </div>
       </div>

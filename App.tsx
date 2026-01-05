@@ -7,20 +7,21 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Cart from './pages/Cart';
+import Services from './pages/Services';
 import Admin from './pages/Admin';
 
 const Layout: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const location = useLocation();
-  
+
   // Hide Navbar and Footer if current path starts with /admin
   const isAdmin = location.pathname.startsWith('/admin');
 
   useEffect(() => {
     // Load products from storage
     setProducts(getProducts());
-    
+
     // Load cart from session storage if exists
     const savedCart = sessionStorage.getItem('cart');
     if (savedCart) setCart(JSON.parse(savedCart));
@@ -36,7 +37,7 @@ const Layout: React.FC = () => {
       const existing = prev.find(item => item.product.id === product.id && item.selectedLiter === liter);
       let newCart;
       if (existing) {
-        newCart = prev.map(item => 
+        newCart = prev.map(item =>
           (item.product.id === product.id && item.selectedLiter === liter)
             ? { ...item, quantity: item.quantity + 1 }
             : item
@@ -78,6 +79,7 @@ const Layout: React.FC = () => {
           <Route path="/" element={<Home products={products} addToCart={addToCart} />} />
           <Route path="/products" element={<Products products={products} addToCart={addToCart} />} />
           <Route path="/cart" element={<Cart cart={cart} updateQuantity={updateCartQuantity} clearCart={clearCart} />} />
+          <Route path="/services" element={<Services />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
       </main>
@@ -86,11 +88,15 @@ const Layout: React.FC = () => {
   );
 };
 
+import { LanguageProvider } from './contexts/LanguageContext';
+
 const App: React.FC = () => {
   return (
-    <Router>
-      <Layout />
-    </Router>
+    <LanguageProvider>
+      <Router>
+        <Layout />
+      </Router>
+    </LanguageProvider>
   );
 };
 
