@@ -10,17 +10,17 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewDetails }) => {
   return (
-    <div className="group bg-white rounded-2xl shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full border border-gray-100 overflow-hidden relative">
+    <div className="group bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full border border-gray-100 dark:border-slate-700 overflow-hidden relative">
 
-      {/* Image Section */}
-      <div className="relative h-56 p-6 flex items-center justify-center bg-gray-50 group-hover:bg-blue-50/30 transition duration-500 cursor-pointer" onClick={() => onViewDetails(product)}>
+      {/* Image Section - White Bg in Dark Mode for Product Pop */}
+      <div className="relative h-56 p-6 flex items-center justify-center bg-gray-50 dark:bg-slate-300 group-hover:bg-blue-50/30 dark:group-hover:bg-slate-200 transition duration-500 cursor-pointer" onClick={() => onViewDetails(product)}>
         <img
           src={product.image_url}
           alt={product.name}
           className="max-h-full max-w-full object-contain drop-shadow-sm group-hover:scale-110 transition duration-500 mix-blend-multiply"
         />
 
-        {/* Tags - Updated Colors */}
+        {/* Tags */}
         <div className="absolute top-3 left-3 flex flex-col gap-2">
           {product.tags.includes("Sale") && (
             <span className="bg-orange-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg shadow-orange-500/30 flex items-center">
@@ -36,31 +36,31 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
       </div>
 
       {/* Content Section */}
-      <div className="p-5 flex flex-col flex-grow">
+      <div className="p-5 flex flex-col flex-grow bg-white dark:bg-slate-800 transition-colors">
         <div className="text-xs font-bold text-blue-500 mb-2 uppercase tracking-wider flex items-center">
           <span className="w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
           {product.category}
         </div>
 
-        <h3 className="font-bold text-slate-800 text-lg mb-3 line-clamp-2 leading-tight group-hover:text-blue-600 transition" onClick={() => onViewDetails(product)}>
+        <h3 className="font-bold text-slate-800 dark:text-white text-lg mb-3 line-clamp-2 leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition" onClick={() => onViewDetails(product)}>
           {product.name}
         </h3>
 
-        <div className="mt-auto pt-4 border-t border-gray-50">
+        <div className="mt-auto pt-4 border-t border-gray-50 dark:border-slate-700">
           <div className="flex flex-col mb-4">
             <span className="text-xs text-gray-400 font-medium mb-1">Boshlang'ich narx:</span>
             <div className="flex items-baseline">
-              <span className="text-2xl font-black text-slate-900 group-hover:text-blue-600 transition duration-300">
+              <span className="text-2xl font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition duration-300">
                 {product.price_uzs[0].toLocaleString()}
               </span>
-              <span className="text-sm text-gray-500 ml-1 font-medium">UZS</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400 ml-1 font-medium">UZS</span>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <button
               onClick={() => onViewDetails(product)}
-              className="flex items-center justify-center py-2.5 px-3 border border-gray-200 bg-white text-gray-600 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition text-sm font-bold"
+              className="flex items-center justify-center py-2.5 px-3 border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-600 dark:text-white rounded-xl hover:bg-gray-50 dark:hover:bg-slate-600 hover:border-gray-300 dark:hover:border-slate-500 transition text-sm font-bold"
             >
               <Eye size={18} className="mr-2" /> Ko'rish
             </button>

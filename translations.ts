@@ -89,6 +89,7 @@ export const translations = {
         serv_desc: "Bizning servis markazimizda malakali ustalar sizning avtomobilingizga sifatli xizmat ko'rsatishadi.",
         serv_oil_change: "Moy Almashtirish",
         serv_oil_desc: "Dvigatel va karobka moylarini professional almashtirish.",
+        serv_oil_filter: "Moy va Filtrlarni Almashtirish",
         serv_filter: "Filtrlarni Almashtirish",
         serv_filter_desc: "Havo, salon va moy filtrlari.",
         serv_diagnostics: "Diagnostika",
@@ -98,6 +99,57 @@ export const translations = {
         serv_form_date: "Qulay Vaqt",
         serv_form_type: "Xizmat Turi",
         serv_submit: "Yozilish",
+
+
+        // Auth
+        auth_login: "Kirish",
+        auth_register: "Ro'yxatdan o'tish",
+        auth_welcome: "Xush kelibsiz!",
+        auth_name: "Ismingiz",
+        auth_name_placeholder: "Ismingizni kiriting",
+        auth_phone: "Telefon Raqam",
+        auth_phone_placeholder: "+998 90 123 45 67",
+        auth_password: "Parol",
+        auth_password_placeholder: "********",
+        auth_submit_login: "Kirish",
+        auth_submit_register: "Ro'yxatdan o'tish",
+        auth_error: "Login yoki parol xato!",
+        auth_profile: "Mening Profilim",
+        auth_login_register_nav: "Kirish / Ro'yxat",
+
+        // Filters & Search
+        filters_title: "Filtrlar",
+        filters_search: "Qidiruv",
+        filters_categories: "Kategoriyalar",
+        filters_brands: "Brendlar",
+        filters_viscosity: "Markalar",
+        filters_sort: "Saralash:",
+        filters_sort_default: "Odatiy",
+        filters_sort_price_asc: "Arzonroq",
+        filters_sort_price_desc: "Qimmatroq",
+        filters_sort_name_asc: "Nomi (A-Z)",
+        filters_clear: "Filtrlarni tozalash",
+
+        // Map
+        map_title: "Bizni Topish Oson",
+        map_subtitle: "Lokatsiya",
+        map_location: "Namangan, O'zbekiston",
+
+        // Theme
+        theme_toggle: "Mavzu",
+        theme_dark: "Tungi",
+        theme_light: "Kunduzgi",
+        theme_lang: "Til",
+
+        // Reviews
+        reviews_title: "Mijozlar Fikri",
+        reviews_leave: "Izoh qoldirish",
+        reviews_name: "Ismingiz",
+        reviews_rating: "Baho:",
+        reviews_comment: "Fikringiz...",
+        reviews_submit: "Yuborish",
+        reviews_submitting: "Yuborilmoqda...",
+        reviews_empty: "Hozircha izohlar yo'q. Birinchi bo'lib fikr bildiring!",
 
         // Footer
         footer_desc: "Sifatli motor moylari va avtomobil texnik suyuqliklari.",
@@ -200,6 +252,7 @@ export const translations = {
         serv_desc: "В нашем сервисном центре квалифицированные мастера качественно обслужат ваш автомобиль.",
         serv_oil_change: "Замена Масла",
         serv_oil_desc: "Профессиональная замена масла в двигателе и КПП.",
+        serv_oil_filter: "Замена Масла и Фильтров",
         serv_filter: "Замена Фильтров",
         serv_filter_desc: "Воздушные, салонные и масляные фильтры.",
         serv_diagnostics: "Диагностика",
@@ -209,6 +262,56 @@ export const translations = {
         serv_form_date: "Удобное Время",
         serv_form_type: "Тип Услуги",
         serv_submit: "Записаться",
+
+        // Auth
+        auth_login: "Вход",
+        auth_register: "Регистрация",
+        auth_welcome: "Добро пожаловать!",
+        auth_name: "Ваше Имя",
+        auth_name_placeholder: "Введите ваше имя",
+        auth_phone: "Номер Телефона",
+        auth_phone_placeholder: "+998 90 123 45 67",
+        auth_password: "Пароль",
+        auth_password_placeholder: "********",
+        auth_submit_login: "Войти",
+        auth_submit_register: "Зарегистрироваться",
+        auth_error: "Неверный логин или пароль!",
+        auth_profile: "Мой Профиль",
+        auth_login_register_nav: "Вход / Регистрация",
+
+        // Filters & Search
+        filters_title: "Фильтры",
+        filters_search: "Поиск",
+        filters_categories: "Категории",
+        filters_brands: "Бренды",
+        filters_viscosity: "Вязкость",
+        filters_sort: "Сортировка:",
+        filters_sort_default: "По умолчанию",
+        filters_sort_price_asc: "Дешевле",
+        filters_sort_price_desc: "Дороже",
+        filters_sort_name_asc: "Название (А-Я)",
+        filters_clear: "Очистить фильтры",
+
+        // Map
+        map_title: "Нас легко найти",
+        map_subtitle: "Локация",
+        map_location: "Наманган, Узбекистан",
+
+        // Theme
+        theme_toggle: "Тема",
+        theme_dark: "Темная",
+        theme_light: "Светлая",
+        theme_lang: "Язык",
+
+        // Reviews
+        reviews_title: "Отзывы Клиентов",
+        reviews_leave: "Оставить отзыв",
+        reviews_name: "Ваше имя",
+        reviews_rating: "Оценка:",
+        reviews_comment: "Ваш отзыв...",
+        reviews_submit: "Отправить",
+        reviews_submitting: "Отправка...",
+        reviews_empty: "Пока нет отзывов. Будьте первым!",
 
         // Footer
         footer_desc: "Качественные моторные масла и автомобильные технические жидкости.",

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Globe, User } from 'lucide-react';
+import { ShoppingCart, Menu, X, Globe, User, Moon, Sun } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface NavbarProps {
   cartCount: number;
@@ -14,6 +15,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
   const location = useLocation();
   const { t, language, setLanguage } = useLanguage();
   const { user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +35,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
   const useDarkBackground = scrolled || !isHeroPage;
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${useDarkBackground ? 'bg-fortex-dark/95 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-6'
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${useDarkBackground ? 'bg-fortex-dark/95 backdrop-blur-md shadow-lg py-3 dark:bg-slate-900/95' : 'bg-transparent py-6'
       }`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
@@ -46,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
 
           {/* Desktop Menu - Pill Style (Matches image 2) */}
           <div className="hidden md:flex items-center space-x-8 animate-fade-in">
-            <div className="bg-white/5 backdrop-blur-sm px-6 py-2 rounded-full border border-white/10 flex items-center space-x-6 shadow-lg shadow-black/5">
+            <div className="bg-white/5 backdrop-blur-sm px-6 py-2 rounded-full border border-white/10 flex items-center space-x-6 shadow-lg shadow-black/5 dark:bg-slate-800/50 dark:border-white/5">
               <Link to="/" className={`text-sm font-bold hover:text-white transition duration-300 uppercase tracking-wide ${location.pathname === '/' ? 'text-white' : 'text-gray-400'}`}>
                 {t('home')}
               </Link>
@@ -67,6 +69,14 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
               >
                 <Globe size={16} />
                 <span>{language.toUpperCase()}</span>
+              </button>
+
+              {/* Theme Toggle */}
+              <button
+                onClick={toggleTheme}
+                className="flex items-center space-x-1 text-sm font-bold text-gray-400 hover:text-yellow-400 transition uppercase border-l border-white/10 pl-4"
+              >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               </button>
             </div>
 
@@ -94,25 +104,39 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-fortex-dark/95 backdrop-blur-xl border-t border-gray-800 animate-fade-in-up shadow-2xl">
+        <div className="md:hidden absolute top-full left-0 w-full bg-fortex-dark/95 backdrop-blur-xl border-t border-gray-800 animate-fade-in-up shadow-2xl dark:bg-slate-900/95 dark:border-gray-700">
           <div className="flex flex-col p-6 space-y-4">
             <Link to="/" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('home')}</Link>
             <Link to="/products" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('products')}</Link>
             <Link to="/services" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('services')}</Link>
             <Link to="/cart" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('cart')} ({cartCount})</Link>
-            <Link to={user ? "/profile" : "/auth"} className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{user ? "Mening Profilim" : "Kirish / Ro'yxatdan o'tish"}</Link>
+            <Link to={user ? "/profile" : "/auth"} className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{user ? t('auth_profile') : t('auth_login_register_nav')}</Link>
             <Link to="/admin" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('admin')}</Link>
 
-            <div className="pt-4 border-t border-gray-800">
+            <div className="pt-4 border-t border-gray-800 flex justify-between space-x-4">
               <button
                 onClick={() => {
                   setLanguage(language === 'uz' ? 'ru' : 'uz');
                   setIsOpen(false);
                 }}
-                className="w-full flex items-center justify-between text-gray-300 hover:text-white p-2"
+                className="flex-1 flex items-center justify-between text-gray-300 hover:text-white p-2 rounded hover:bg-white/5"
               >
-                <span className="font-bold flex items-center"><Globe size={18} className="mr-2" /> Tilni o'zgartirish</span>
+                <div className="flex items-center"><Globe size={18} className="mr-2" /> {t('theme_lang')}</div>
                 <span className="bg-white/10 px-2 py-1 rounded text-sm font-bold">{language.toUpperCase()}</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  toggleTheme();
+                  setIsOpen(false);
+                }}
+                className="flex-1 flex items-center justify-between text-gray-300 hover:text-white p-2 rounded hover:bg-white/5"
+              >
+                <div className="flex items-center">
+                  {theme === 'dark' ? <Sun size={18} className="mr-2" /> : <Moon size={18} className="mr-2" />}
+                  {t('theme_toggle')}
+                </div>
+                <span className="bg-white/10 px-2 py-1 rounded text-sm font-bold">{theme === 'dark' ? t('theme_dark') : t('theme_light')}</span>
               </button>
             </div>
           </div>

@@ -13,6 +13,7 @@ import Auth from './pages/Auth';
 import Profile from './pages/Profile';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { AuthProvider } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 const Layout: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -97,11 +98,13 @@ const Layout: React.FC = () => {
 const App: React.FC = () => {
   return (
     <LanguageProvider>
-      <AuthProvider>
-        <Router>
-          <Layout />
-        </Router>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <Router>
+            <Layout />
+          </Router>
+        </AuthProvider>
+      </ThemeProvider>
     </LanguageProvider>
   );
 };

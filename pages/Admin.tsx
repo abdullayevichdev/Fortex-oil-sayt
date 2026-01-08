@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Product, Order, CATEGORIES } from '../types';
-import { getProducts, saveProduct, deleteProduct, getOrders, updateOrderStatus } from '../services/storage';
+import { getProducts, saveProduct, deleteProduct, getOrders, updateOrderStatus, resetStatistics } from '../services/storage';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import { Settings, Package, ShoppingBag, LogOut, Edit, Trash, Plus, Lock, Image as ImageIcon, Home, ExternalLink, ChevronRight } from 'lucide-react';
+import { jsPDF } from "jspdf";
+import { Settings, Package, ShoppingBag, LogOut, Edit, Trash, Plus, Lock, Image as ImageIcon, Home, ExternalLink, ChevronRight, FileText, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Admin: React.FC = () => {
@@ -38,6 +39,66 @@ const Admin: React.FC = () => {
     }, 0);
     return { name: cat, sales: count };
   });
+
+  const handleResetStats = () => {
+    if (window.confirm("Diqqat! Barcha statistika va buyurtmalar tarixi o'chiriladi. davom etasizmi?")) {
+      resetStatistics();
+      setOrders([]);
+      setProducts(getProducts());
+    }
+  };
+
+  const handleExportStats = () => {
+    const doc = new jsPDF();
+
+    // Header
+    doc.setFontSize(22);
+    doc.setFont("helvetica", "bold");
+    doc.text("Fortex Oil", 105, 20, { align: "center" });
+
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "normal");
+    doc.text("Statistika Hisoboti", 105, 30, { align: "center" });
+
+    doc.setLineWidth(0.5);
+    doc.line(20, 35, 190, 35);
+
+    // Date
+    doc.setFontSize(10);
+    doc.text(`Sana: ${new Date().toLocaleString()}`, 20, 45);
+
+    // General Stats
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("Umumiy Ko'rsatkichlar", 20, 60);
+
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Jami Buyurtmalar: ${totalOrders} ta`, 30, 70);
+    doc.text(`Jami Tushum: ${totalRevenue.toLocaleString()} UZS`, 30, 80);
+    doc.text(`Mahsulotlar Soni: ${products.length} ta`, 30, 90);
+
+    // Sales by Category
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("Kategoriyalar Bo'yicha:", 20, 110);
+
+    let y = 120;
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+
+    salesData.forEach((item) => {
+      doc.text(`${item.name}: ${item.sales} ta`, 30, y);
+      y += 10;
+    });
+
+    // Footer
+    doc.line(20, y + 10, 190, y + 10);
+    doc.setFontSize(10);
+    doc.text("Administrator imzosi: _________________", 20, y + 25);
+
+    doc.save("fortex_hisobot.pdf");
+  };
 
   const handleSaveProduct = (e: React.FormEvent) => {
     e.preventDefault();
@@ -151,9 +212,26 @@ const Admin: React.FC = () => {
       <div className="flex-grow overflow-y-auto p-8 bg-slate-50 scroll-smooth">
 
         {/* Dashboard Tab */}
+
         {activeTab === 'dashboard' && (
           <div className="space-y-8 animate-fade-in max-w-7xl mx-auto">
-            <h2 className="text-3xl font-black text-slate-800">Umumiy Statistika</h2>
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <h2 className="text-3xl font-black text-slate-800">Umumiy Statistika</h2>
+              <div className="flex gap-3">
+                <button
+                  onClick={handleExportStats}
+                  className="flex items-center px-4 py-2 bg-slate-800 text-white rounded-xl hover:bg-slate-700 transition shadow-lg shadow-slate-500/30"
+                >
+                  <FileText size={18} className="mr-2" /> Statistikani Chiqarish
+                </button>
+                <button
+                  onClick={handleResetStats}
+                  className="flex items-center px-4 py-2 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 transition"
+                >
+                  <RefreshCw size={18} className="mr-2" /> Statistikani Asliga Qaytarish
+                </button>
+              </div>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition duration-300">
                 <div className="flex justify-between items-start mb-4">
@@ -242,28 +320,108 @@ const Admin: React.FC = () => {
                       </select>
                     </div>
 
-                    <div className="col-span-1">
-                      <label className="block text-sm font-bold text-gray-700 mb-2">Narxlar (so'mda)</label>
-                      <input className="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-fortex-primary outline-none transition" placeholder="Masalan: 100000, 200000"
-                        value={editingProduct.price_uzs?.join(',')}
-                        onChange={e => setEditingProduct({ ...editingProduct, price_uzs: e.target.value.split(',').map(Number) })}
-                      />
-                      <p className="text-xs text-gray-500 mt-1">Hajmlarga mos ketma-ketlikda yozing</p>
-                    </div>
-                    <div className="col-span-1">
-                      <label className="block text-sm font-bold text-gray-700 mb-2">Ombordagi Soni (Stock)</label>
-                      <input className="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-fortex-primary outline-none transition" placeholder="Masalan: 10, 5"
-                        value={editingProduct.stock?.join(',')}
-                        onChange={e => setEditingProduct({ ...editingProduct, stock: e.target.value.split(',').map(Number) })}
-                      />
-                      <p className="text-xs text-gray-500 mt-1">Agar bo'sh qoldirsangiz, cheksiz deb hisoblanadi</p>
-                    </div>
-                    <div className="col-span-1">
-                      <label className="block text-sm font-bold text-gray-700 mb-2">Hajmlar</label>
-                      <input className="w-full border border-gray-300 p-3 rounded-xl focus:ring-2 focus:ring-fortex-primary outline-none transition" placeholder="Masalan: 1L, 4L"
-                        value={editingProduct.liters?.join(',')}
-                        onChange={e => setEditingProduct({ ...editingProduct, liters: e.target.value.split(',') })}
-                      />
+                    <div className="col-span-1 md:col-span-2 bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                      <label className="block text-sm font-bold text-gray-700 mb-4">Mahsulot Variantlari (Hajm va Narx)</label>
+                      <div className="space-y-3">
+                        {editingProduct.liters?.map((liter, idx) => (
+                          <div key={idx} className="flex gap-4 items-start">
+                            <div className="flex-1">
+                              <label className="text-xs font-bold text-gray-500 mb-1 block">Hajm</label>
+                              <input
+                                className="w-full border border-gray-300 p-2 rounded-lg text-sm focus:ring-2 focus:ring-fortex-primary outline-none"
+                                placeholder="1L"
+                                value={liter}
+                                onChange={(e) => {
+                                  const newLiters = [...(editingProduct.liters || [])];
+                                  newLiters[idx] = e.target.value;
+                                  setEditingProduct({ ...editingProduct, liters: newLiters });
+                                }}
+                              />
+                            </div>
+                            <div className="flex-1">
+                              <label className="text-xs font-bold text-gray-500 mb-1 block">Narx (so'm)</label>
+                              <input
+                                type="number"
+                                className="w-full border border-gray-300 p-2 rounded-lg text-sm focus:ring-2 focus:ring-fortex-primary outline-none"
+                                placeholder="100000"
+                                value={editingProduct.price_uzs?.[idx] || ''}
+                                onChange={(e) => {
+                                  const newPrice = Number(e.target.value);
+                                  const newPrices = [...(editingProduct.price_uzs || [])];
+                                  newPrices[idx] = newPrice;
+
+                                  // Auto-calculate logic
+                                  const currentLiterStr = editingProduct.liters?.[idx] || '';
+                                  const parseVolume = (str: string) => {
+                                    const match = str.match(/(\d+(\.\d+)?)/);
+                                    return match ? parseFloat(match[0]) : 0;
+                                  };
+                                  const currentVol = parseVolume(currentLiterStr);
+
+                                  // If we are editing the 1L price (approx volume 1), update others
+                                  if (currentVol === 1 && newPrice > 0) {
+                                    editingProduct.liters?.forEach((lStr, i) => {
+                                      if (i !== idx) {
+                                        const vol = parseVolume(lStr);
+                                        if (vol > 0) {
+                                          // Linear calculation: BasePrice * Volume
+                                          newPrices[i] = Math.round(newPrice * vol);
+                                        }
+                                      }
+                                    });
+                                  }
+
+                                  setEditingProduct({ ...editingProduct, price_uzs: newPrices });
+                                }}
+                              />
+                            </div>
+                            <div className="flex-1">
+                              <label className="text-xs font-bold text-gray-500 mb-1 block">Stock</label>
+                              <input
+                                type="number"
+                                className="w-full border border-gray-300 p-2 rounded-lg text-sm focus:ring-2 focus:ring-fortex-primary outline-none"
+                                placeholder="∞"
+                                value={editingProduct.stock?.[idx] ?? ''}
+                                onChange={(e) => {
+                                  const newStock = [...(editingProduct.stock || [])];
+                                  if (newStock.length < (editingProduct.liters?.length || 0)) {
+                                    // Fill gaps if stock array is shorter
+                                    for (let i = newStock.length; i < (editingProduct.liters?.length || 0); i++) newStock[i] = 0;
+                                  }
+                                  newStock[idx] = Number(e.target.value);
+                                  setEditingProduct({ ...editingProduct, stock: newStock });
+                                }}
+                              />
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const newLiters = editingProduct.liters?.filter((_, i) => i !== idx);
+                                const newPrices = editingProduct.price_uzs?.filter((_, i) => i !== idx);
+                                const newStock = editingProduct.stock?.filter((_, i) => i !== idx);
+                                setEditingProduct({ ...editingProduct, liters: newLiters, price_uzs: newPrices, stock: newStock });
+                              }}
+                              className="mt-6 p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition"
+                            >
+                              <Trash size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingProduct({
+                            ...editingProduct,
+                            liters: [...(editingProduct.liters || []), ''],
+                            price_uzs: [...(editingProduct.price_uzs || []), 0],
+                            stock: [...(editingProduct.stock || []), 0]
+                          });
+                        }}
+                        className="mt-4 text-sm font-bold text-fortex-primary hover:underline flex items-center"
+                      >
+                        <Plus size={16} className="mr-1" /> Yangi Variant Qo'shish
+                      </button>
                     </div>
 
                     {/* Image Input Section */}

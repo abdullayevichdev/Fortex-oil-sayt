@@ -1,7 +1,7 @@
 import { Product, Order } from '../types';
 import { initialProducts as defaultProducts } from '../data';
 
-const PRODUCTS_KEY = 'fortex_products';
+const PRODUCTS_KEY = 'fortex_products_v5';
 const ORDERS_KEY = 'fortex_orders';
 
 export const getProducts = (): Product[] => {
@@ -69,3 +69,9 @@ export const updateOrderStatus = (id: string, status: Order['status']) => {
     localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
   }
 }
+
+export const resetStatistics = () => {
+  localStorage.setItem(ORDERS_KEY, '[]');
+  const products = getProducts().map(p => ({ ...p, sales: 0 }));
+  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
+};

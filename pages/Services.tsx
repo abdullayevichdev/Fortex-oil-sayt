@@ -17,7 +17,7 @@ const Services: React.FC = () => {
         name: '',
         phone: '+998 ',
         carModel: '',
-        serviceType: 'oil_change',
+        serviceType: 'oil_filter_change',
         date: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,18 +25,11 @@ const Services: React.FC = () => {
 
     const services = [
         {
-            id: 'oil_change',
+            id: 'oil_filter_change',
             icon: <Zap className="w-12 h-12 text-blue-500" />,
-            title: t('serv_oil_change'),
-            desc: t('serv_oil_desc'),
+            title: t('serv_oil_filter'),
+            desc: t('serv_oil_desc'), // Can use combined desc later if needed, for now reuse oil desc or combine texts
             bg: 'bg-blue-50'
-        },
-        {
-            id: 'filter_replace',
-            icon: <Wrench className="w-12 h-12 text-orange-500" />,
-            title: t('serv_filter'),
-            desc: t('serv_filter_desc'),
-            bg: 'bg-orange-50'
         },
         {
             id: 'diagnostics',
@@ -73,7 +66,7 @@ const Services: React.FC = () => {
                 name: '',
                 phone: '+998 ',
                 carModel: '',
-                serviceType: 'oil_change',
+                serviceType: 'oil_filter_change',
                 date: ''
             });
         } catch (error) {
@@ -85,10 +78,10 @@ const Services: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 pb-20">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pb-20 transition-colors">
             {/* Hero Section */}
             <div className="relative pt-32 pb-24 bg-fortex-dark text-white overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-blue-900 opacity-90 z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-blue-900 opacity-90 z-10 transition-colors"></div>
                 <img
                     src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
                     alt="Car Service"
@@ -110,38 +103,38 @@ const Services: React.FC = () => {
             </div>
 
             <div className="container mx-auto px-4 -mt-16 relative z-30">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div className="flex flex-wrap justify-center gap-8 mb-16">
                     {services.map((service, idx) => (
-                        <div key={service.id} className={`bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 animate-fade-in-up border border-gray-100`} style={{ animationDelay: `${0.3 + (idx * 0.1)}s` }}>
-                            <div className={`w-20 h-20 rounded-2xl ${service.bg} flex items-center justify-center mb-6`}>
+                        <div key={service.id} className={`w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] max-w-sm bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 animate-fade-in-up border border-gray-100 dark:border-slate-700`} style={{ animationDelay: `${0.3 + (idx * 0.1)}s` }}>
+                            <div className={`w-20 h-20 rounded-2xl ${service.bg} dark:bg-opacity-20 flex items-center justify-center mb-6`}>
                                 {service.icon}
                             </div>
-                            <h3 className="text-2xl font-black text-slate-800 mb-3">{service.title}</h3>
-                            <p className="text-gray-500 leading-relaxed">{service.desc}</p>
+                            <h3 className="text-2xl font-black text-slate-800 dark:text-white mb-3">{service.title}</h3>
+                            <p className="text-gray-500 dark:text-gray-400 leading-relaxed">{service.desc}</p>
                         </div>
                     ))}
                 </div>
 
-                <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+                <div className="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up border border-gray-100 dark:border-slate-700" style={{ animationDelay: '0.6s' }}>
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         <div className="p-8 lg:p-12">
                             <div className="flex items-center space-x-3 mb-8">
-                                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-fortex-primary">
+                                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-fortex-primary">
                                     <Calendar size={24} />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-black text-slate-800">{t('serv_book_title')}</h2>
-                                    <p className="text-sm text-gray-500">{t('serv_desc')}</p>
+                                    <h2 className="text-2xl font-black text-slate-800 dark:text-white">{t('serv_book_title')}</h2>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('serv_desc')}</p>
                                 </div>
                             </div>
 
                             {isSuccess ? (
                                 <div className="text-center py-10">
-                                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 animate-bounce-slow">
+                                    <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 animate-bounce-slow">
                                         <CheckCircle size={40} />
                                     </div>
-                                    <h3 className="text-2xl font-bold text-slate-800 mb-2">So'rovingiz Qabul Qilindi!</h3>
-                                    <p className="text-gray-500 mb-6">Tez orada operatorlarimiz siz bilan bog'lanib, vaqtni tasqlashadi.</p>
+                                    <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">So'rovingiz Qabul Qilindi!</h3>
+                                    <p className="text-gray-500 dark:text-gray-400 mb-6">Tez orada operatorlarimiz siz bilan bog'lanib, vaqtni tasqlashadi.</p>
                                     <button
                                         onClick={() => setIsSuccess(false)}
                                         className="text-fortex-primary font-bold hover:underline"
@@ -152,7 +145,7 @@ const Services: React.FC = () => {
                             ) : (
                                 <form onSubmit={handleSubmit} className="space-y-6">
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-2">{t('cart_form_name')}</label>
+                                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">{t('cart_form_name')}</label>
                                         <div className="relative">
                                             <User className="absolute left-4 top-3.5 text-gray-400" size={20} />
                                             <input
@@ -160,14 +153,14 @@ const Services: React.FC = () => {
                                                 type="text"
                                                 value={formData.name}
                                                 onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                                className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition"
+                                                className="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition dark:text-white dark:placeholder-gray-500"
                                                 placeholder="Ism Familiya"
                                             />
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-2">{t('cart_form_phone')}</label>
+                                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">{t('cart_form_phone')}</label>
                                         <div className="relative">
                                             <Phone className="absolute left-4 top-3.5 text-gray-400" size={20} />
                                             <input
@@ -175,15 +168,15 @@ const Services: React.FC = () => {
                                                 type="tel"
                                                 value={formData.phone}
                                                 onChange={handlePhoneChange}
-                                                className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition"
+                                                className="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition dark:text-white dark:placeholder-gray-500"
                                                 placeholder="+998 90 123 45 67"
                                             />
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
                                         <div>
-                                            <label className="block text-sm font-bold text-gray-700 mb-2">{t('serv_form_car')}</label>
+                                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 min-h-[40px] flex items-end">{t('serv_form_car')}</label>
                                             <div className="relative">
                                                 <Car className="absolute left-4 top-3.5 text-gray-400" size={20} />
                                                 <input
@@ -191,14 +184,14 @@ const Services: React.FC = () => {
                                                     type="text"
                                                     value={formData.carModel}
                                                     onChange={e => setFormData({ ...formData, carModel: e.target.value })}
-                                                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition"
+                                                    className="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition dark:text-white dark:placeholder-gray-500"
                                                     placeholder="Chevrolet Malibu 2"
                                                 />
                                             </div>
                                         </div>
 
                                         <div>
-                                            <label className="block text-sm font-bold text-gray-700 mb-2">{t('serv_form_date')}</label>
+                                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 min-h-[40px] flex items-end">{t('serv_form_date')}</label>
                                             <div className="relative">
                                                 <Clock className="absolute left-4 top-3.5 text-gray-400" size={20} />
                                                 <input
@@ -206,19 +199,19 @@ const Services: React.FC = () => {
                                                     type="datetime-local"
                                                     value={formData.date}
                                                     onChange={e => setFormData({ ...formData, date: e.target.value })}
-                                                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition text-gray-500"
+                                                    className="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition text-gray-500 dark:text-white"
                                                 />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-2">{t('serv_form_type')}</label>
-                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">{t('serv_form_type')}</label>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             {services.map(service => (
                                                 <label
                                                     key={service.id}
-                                                    className={`cursor-pointer border-2 rounded-xl p-3 flex flex-col items-center justify-center text-center transition-all ${formData.serviceType === service.id ? 'border-fortex-primary bg-blue-50 text-fortex-primary shadow-md transform scale-105' : 'border-gray-100 hover:border-blue-200 text-gray-500'}`}
+                                                    className={`cursor-pointer border-2 rounded-xl p-4 flex flex-col items-center justify-center text-center transition-all ${formData.serviceType === service.id ? 'border-fortex-primary bg-blue-50 dark:bg-blue-900/20 text-fortex-primary shadow-md transform scale-105' : 'border-gray-100 dark:border-slate-700 hover:border-blue-200 dark:hover:border-slate-600 text-gray-500 dark:text-gray-400'}`}
                                                 >
                                                     <input
                                                         type="radio"
@@ -228,8 +221,8 @@ const Services: React.FC = () => {
                                                         onChange={() => setFormData({ ...formData, serviceType: service.id })}
                                                         className="hidden"
                                                     />
-                                                    <div className="mb-2 scale-75">{service.icon}</div>
-                                                    <span className="text-xs font-bold">{service.title}</span>
+                                                    <div className="mb-2">{service.icon}</div>
+                                                    <span className="text-sm font-bold">{service.title}</span>
                                                 </label>
                                             ))}
                                         </div>
@@ -242,7 +235,7 @@ const Services: React.FC = () => {
                                     >
                                         {isSubmitting ? (
                                             <>
-                                                <Loader2 className="animate-spin mr-2" /> Yuborilmoqda...
+                                                <Loader2 className="animate-spin mr-2" /> {t('reviews_submitting')}
                                             </>
                                         ) : (
                                             t('serv_submit')

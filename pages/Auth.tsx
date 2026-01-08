@@ -47,33 +47,33 @@ const Auth: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center bg-gray-50">
-            <div className="max-w-md w-full bg-white rounded-3xl shadow-xl overflow-hidden">
-                <div className="bg-fortex-dark p-8 text-center">
-                    <h2 className="text-3xl font-black text-white italic tracking-tighter">FORTEX<span className="text-blue-500">.UZ</span></h2>
-                    <p className="text-gray-400 mt-2">{isLogin ? "Xush kelibsiz!" : "Ro'yxatdan o'tish"}</p>
+        <div className="min-h-screen pt-24 pb-12 px-4 flex items-center justify-center bg-gray-50 dark:bg-slate-900 transition-colors">
+            <div className="max-w-md w-full bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-slate-700">
+                <div className="bg-fortex-dark p-8 text-center text-white">
+                    <h2 className="text-3xl font-black italic tracking-tighter">FORTEX<span className="text-blue-500">.UZ</span></h2>
+                    <p className="text-gray-400 mt-2">{isLogin ? t('auth_welcome') : t('auth_register')}</p>
                 </div>
 
                 <div className="p-8">
-                    <div className="flex mb-8 bg-gray-100 p-1 rounded-xl">
+                    <div className="flex mb-8 bg-gray-100 dark:bg-slate-700 p-1 rounded-xl">
                         <button
                             onClick={() => setIsLogin(true)}
-                            className={`flex-1 py-2 rounded-lg font-bold text-sm transition ${isLogin ? 'bg-white text-fortex-primary shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                            className={`flex-1 py-2 rounded-lg font-bold text-sm transition ${isLogin ? 'bg-white dark:bg-slate-600 text-fortex-primary shadow-sm' : 'text-gray-400 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
                         >
-                            Kirish
+                            {t('auth_login')}
                         </button>
                         <button
                             onClick={() => setIsLogin(false)}
-                            className={`flex-1 py-2 rounded-lg font-bold text-sm transition ${!isLogin ? 'bg-white text-fortex-primary shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}
+                            className={`flex-1 py-2 rounded-lg font-bold text-sm transition ${!isLogin ? 'bg-white dark:bg-slate-600 text-fortex-primary shadow-sm' : 'text-gray-400 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
                         >
-                            Ro'yxatdan o'tish
+                            {t('auth_register')}
                         </button>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         {!isLogin && (
                             <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-1">Ismingiz</label>
+                                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">{t('auth_name')}</label>
                                 <div className="relative">
                                     <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                                     <input
@@ -81,15 +81,15 @@ const Auth: React.FC = () => {
                                         required
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-fortex-primary outline-none transition font-medium"
-                                        placeholder="Ismingizni kiriting"
+                                        className="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-fortex-primary outline-none transition font-medium dark:text-white dark:placeholder-gray-500"
+                                        placeholder={t('auth_name_placeholder')}
                                     />
                                 </div>
                             </div>
                         )}
 
                         <div>
-                            <label className="block text-sm font-bold text-gray-700 mb-1">Telefon Raqam</label>
+                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">{t('auth_phone')}</label>
                             <div className="relative">
                                 <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                                 <input
@@ -98,14 +98,14 @@ const Auth: React.FC = () => {
                                     value={phone}
                                     onChange={handlePhoneChange}
                                     maxLength={17}
-                                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-fortex-primary outline-none transition font-medium"
-                                    placeholder="+998 90 123 45 67"
+                                    className="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-fortex-primary outline-none transition font-medium dark:text-white dark:placeholder-gray-500"
+                                    placeholder={t('auth_phone_placeholder')}
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-bold text-gray-700 mb-1">Parol</label>
+                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">{t('auth_password')}</label>
                             <div className="relative">
                                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                                 <input
@@ -113,14 +113,14 @@ const Auth: React.FC = () => {
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-fortex-primary outline-none transition font-medium"
-                                    placeholder="********"
+                                    className="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-fortex-primary outline-none transition font-medium dark:text-white dark:placeholder-gray-500"
+                                    placeholder={t('auth_password_placeholder')}
                                 />
                             </div>
                         </div>
 
                         <button type="submit" className="w-full bg-fortex-primary text-white py-4 rounded-xl font-black text-lg shadow-lg shadow-blue-500/30 hover:bg-blue-600 transition mt-4">
-                            {isLogin ? "Kirish" : "Ro'yxatdan o'tish"}
+                            {isLogin ? t('auth_submit_login') : t('auth_submit_register')}
                         </button>
                     </form>
                 </div>

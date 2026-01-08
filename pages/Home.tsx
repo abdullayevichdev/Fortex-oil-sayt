@@ -14,15 +14,14 @@ const Home: React.FC<HomeProps> = ({ products, addToCart }) => {
   const { t } = useLanguage();
 
   return (
-    <div className="bg-slate-50">
+    <div className="bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
       {/* Hero Section */}
       <div className="relative h-screen min-h-[600px] flex items-center overflow-hidden bg-fortex-dark text-white">
         {/* Animated Background */}
-        {/* Animated Background - Removed */}
         <div className="absolute inset-0 z-0 opacity-30 animate-scale-in" style={{ animationDuration: '10s' }}>
           <div className="w-full h-full bg-gradient-to-br from-blue-900 via-slate-900 to-black"></div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-fortex-dark via-fortex-dark/90 to-transparent z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-fortex-dark via-fortex-dark/90 to-transparent z-10 transition-colors"></div>
 
         <div className="container mx-auto px-4 relative z-20 pt-16">
           <div className="max-w-3xl space-y-8">
@@ -54,40 +53,40 @@ const Home: React.FC<HomeProps> = ({ products, addToCart }) => {
       {/* Features Grid (Replaces Red Banner) */}
       <div className="container mx-auto px-4 py-12 relative z-30">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-8 rounded-2xl shadow-xl hover:-translate-y-2 transition duration-500">
-            <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6 text-fortex-primary">
+          <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl hover:-translate-y-2 transition duration-500 border border-gray-100 dark:border-slate-700">
+            <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6 text-fortex-primary">
               <ShieldCheck size={32} />
             </div>
-            <h3 className="text-xl font-bold mb-3 text-slate-800">{t('feat_1_title')}</h3>
-            <p className="text-gray-500 leading-relaxed">{t('feat_1_desc')}</p>
+            <h3 className="text-xl font-bold mb-3 text-slate-800 dark:text-white">{t('feat_1_title')}</h3>
+            <p className="text-gray-500 dark:text-gray-400 leading-relaxed">{t('feat_1_desc')}</p>
           </div>
-          <div className="bg-white p-8 rounded-2xl shadow-xl hover:-translate-y-2 transition duration-500">
-            <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6 text-fortex-primary">
+          <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl hover:-translate-y-2 transition duration-500 border border-gray-100 dark:border-slate-700">
+            <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6 text-fortex-primary">
               <Zap size={32} />
             </div>
-            <h3 className="text-xl font-bold mb-3 text-slate-800">{t('feat_2_title')}</h3>
-            <p className="text-gray-500 leading-relaxed">{t('feat_2_desc')}</p>
+            <h3 className="text-xl font-bold mb-3 text-slate-800 dark:text-white">{t('feat_2_title')}</h3>
+            <p className="text-gray-500 dark:text-gray-400 leading-relaxed">{t('feat_2_desc')}</p>
           </div>
-          <div className="bg-white p-8 rounded-2xl shadow-xl hover:-translate-y-2 transition duration-500">
-            <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6 text-fortex-primary">
+          <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl hover:-translate-y-2 transition duration-500 border border-gray-100 dark:border-slate-700">
+            <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-6 text-fortex-primary">
               <Award size={32} />
             </div>
-            <h3 className="text-xl font-bold mb-3 text-slate-800">{t('feat_3_title')}</h3>
-            <p className="text-gray-500 leading-relaxed">{t('feat_3_desc')}</p>
+            <h3 className="text-xl font-bold mb-3 text-slate-800 dark:text-white">{t('feat_3_title')}</h3>
+            <p className="text-gray-500 dark:text-gray-400 leading-relaxed">{t('feat_3_desc')}</p>
           </div>
         </div>
       </div>
 
       {/* Google Map Section */}
-      <div id="location" className="py-20 bg-white relative">
+      <div id="location" className="py-20 bg-white dark:bg-slate-900 relative transition-colors">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 animate-fade-in-up">
-            <span className="text-fortex-primary font-bold tracking-widest uppercase text-sm mb-2 block">Lokatsiya</span>
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900">Bizni Topish Oson</h2>
+            <span className="text-fortex-primary font-bold tracking-widest uppercase text-sm mb-2 block">{t('map_subtitle')}</span>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white">{t('map_title')}</h2>
             <div className="w-20 h-1 bg-fortex-primary mx-auto mt-4 rounded-full"></div>
           </div>
 
-          <div className="bg-slate-100 p-2 rounded-3xl shadow-2xl overflow-hidden h-[500px] relative group">
+          <div className="bg-slate-100 dark:bg-slate-800 p-2 rounded-3xl shadow-2xl overflow-hidden h-[500px] relative group border border-gray-200 dark:border-gray-700">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3012.378954752672!2d71.732222!3d40.969778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDDCsDU4JzExLjIiTiA3McKwNDMnNTYuMCJF!5e0!3m2!1sen!2s!4v1715000000000!5m2!1sen!2s"
               width="100%"
@@ -99,13 +98,13 @@ const Home: React.FC<HomeProps> = ({ products, addToCart }) => {
               title="Fortex Location"
               className="rounded-2xl"
             ></iframe>
-            <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-lg flex items-center space-x-4 max-w-xs animate-fade-in-up">
+            <div className="absolute bottom-6 left-6 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-4 rounded-xl shadow-lg flex items-center space-x-4 max-w-xs animate-fade-in-up border border-gray-200 dark:border-gray-700">
               <div className="bg-fortex-primary text-white p-3 rounded-full">
                 <MapPin size={24} />
               </div>
               <div>
-                <p className="font-bold text-slate-800">Namangan, O'zbekiston</p>
-                <p className="text-xs text-gray-500">40°58'11.2"N 71°43'56.0"E</p>
+                <p className="font-bold text-slate-800 dark:text-white">{t('map_location')}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">40°58'11.2"N 71°43'56.0"E</p>
               </div>
             </div>
           </div>
