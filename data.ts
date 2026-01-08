@@ -451,28 +451,5 @@ export const initialProducts: Product[] = [
     seo: { title: "Lukoil Moylari Assortiment", meta_description: "Lukoil moylari ulgurji va chakana." },
     telegram_bot: { buy_button: true, status_sequence: ["Pending"], admin_notification: true, pdf_receipt: true, payment_card: "9860 1701 1369 9921", user_data_required: [] } as any
   },
-  {
-    id: "p38",
-    name: "SHELL Helix Ultra 0W-20",
-    category: "Motor Oil",
-    liters: ["1L", "4L"],
-    price_uzs: [130000, 480000],
-    image_url: "https://www.shell-livedocs.com/data/published/en-US/9036c1e5-1a3b-4177-ad6b-804155b40d6e.jpeg",
-    description: "Eng zamonaviy dvigatellar uchun maxsus 0W-20 sintetik moy. Gibrid va turbo dvigatellar uchun ideal.",
-    tags: ["Premium", "Hybrid"],
-    seo: { title: "Shell Helix Ultra 0W-20", meta_description: "Shell 0W-20 sintetik moyi narxi." },
-    telegram_bot: { buy_button: true, status_sequence: ["Pending"], admin_notification: true, pdf_receipt: true, payment_card: "9860 1701 1369 9921", user_data_required: ["full_name", "phone_number"] } as any
-  },
-  {
-    id: "p39",
-    name: "ZIC Zero 0W-20",
-    category: "Motor Oil",
-    liters: ["1L", "4L"],
-    price_uzs: [120000, 420000],
-    image_url: "https://zicoil.ru/upload/iblock/6d0/6d080f58557342738981446755675555.png",
-    description: "To'liq sintetik 0W-20 motor moyi. Yoqilg'ini tejash va dvigatelni himoyalash uchun mukammal yechim.",
-    tags: ["Premium", "Eco"],
-    seo: { title: "ZIC Zero 0W-20", meta_description: "ZIC 0W-20 narxlari." },
-    telegram_bot: { buy_button: true, status_sequence: ["Pending"], admin_notification: true, pdf_receipt: true, payment_card: "9860 1701 1369 9921", user_data_required: ["full_name", "phone_number"] } as any
-  }
+
 ];

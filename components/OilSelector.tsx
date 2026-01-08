@@ -183,6 +183,11 @@ const OilSelector: React.FC<OilSelectorProps> = ({ products, onAddToCart }) => {
                 // Find ALL matches
                 let matches = products.filter(p => p.name.includes(viscosity));
 
+                // FALLBACK LOGIC: If 0W-20 is recommended but not found, try 5W-30
+                if (matches.length === 0 && viscosity === '0W-20') {
+                    matches = products.filter(p => p.name.includes('5W-30'));
+                }
+
                 // Sort: Prioritize Premium Brands
                 const prioritizedBrands = ['LiQui Moly', 'Shell', 'Castrol', 'Motul', 'ZIC', 'Mobil'];
 
