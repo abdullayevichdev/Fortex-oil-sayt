@@ -6,6 +6,7 @@ import { sendOrderToTelegram } from '../services/telegram';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Link } from 'react-router-dom';
 import jsPDF from 'jspdf';
+import { handleImageError } from '../utils/image';
 
 interface CartProps {
   cart: CartItem[];
@@ -166,7 +167,7 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
             {cart.map((item, idx) => (
               <div key={`${item.product.id}-${item.selectedLiter}`} className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-4 md:p-6 flex flex-col md:flex-row items-center hover:shadow-md transition duration-300">
                 <div className="w-24 h-24 bg-gray-50 dark:bg-slate-200 rounded-xl p-2 flex-shrink-0 border border-gray-50 dark:border-slate-600 mb-4 md:mb-0">
-                  <img src={item.product.image_url} alt={item.product.name} className="w-full h-full object-contain mix-blend-multiply" />
+                  <img src={item.product.image_url} alt={item.product.name} onError={handleImageError} className="w-full h-full object-contain mix-blend-multiply" />
                 </div>
 
                 <div className="flex-grow text-center md:text-left md:ml-6">

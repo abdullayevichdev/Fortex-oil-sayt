@@ -1,8 +1,10 @@
 import React from 'react';
 import { Product } from '../types';
 import { MapPin, ArrowRight, ShieldCheck, Zap, Award } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import OilSelector from '../components/OilSelector';
+import ProductCard from '../components/ProductCard';
+import ServicesSection from '../components/ServicesSection';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface HomeProps {
@@ -10,8 +12,22 @@ interface HomeProps {
   addToCart: (product: Product, liter?: string) => void;
 }
 
+// Bosh sahifada ko'rsatiladigan tanlangan premium mahsulotlar (tartib bilan)
+const FEATURED_IDS = ['p9', 'p10', 'p3', 'p15', 'p5', 'p1'];
+
 const Home: React.FC<HomeProps> = ({ products, addToCart }) => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
+
+  // Tanlangan mahsulotlarni tartib bo'yicha olish; topilmasa birinchi 6 tasi bilan to'ldirish
+  const featuredProducts = (() => {
+    const picked = FEATURED_IDS
+      .map(id => products.find(p => p.id === id))
+      .filter((p): p is Product => Boolean(p));
+    if (picked.length >= 6) return picked.slice(0, 6);
+    const extra = products.filter(p => !picked.includes(p)).slice(0, 6 - picked.length);
+    return [...picked, ...extra];
+  })();
 
   return (
     <div className="bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
@@ -80,6 +96,44 @@ const Home: React.FC<HomeProps> = ({ products, addToCart }) => {
           </div>
         </div>
       </div>
+
+      {/* Featured Products Section */}
+      {featuredProducts.length > 0 && (
+        <div className="py-20 bg-white dark:bg-slate-900 transition-colors">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-14 animate-fade-in-up">
+              <span className="text-fortex-primary font-bold tracking-widest uppercase text-sm mb-2 block">{t('featured_subtitle')}</span>
+              <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white">{t('featured_title')}</h2>
+              <div className="w-20 h-1 bg-fortex-primary mx-auto mt-4 rounded-full"></div>
+              <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mt-5">{t('featured_desc')}</p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {featuredProducts.map((product, index) => (
+                <div key={product.id} className="animate-fade-in-up" style={{ animationDelay: `${0.1 + (index * 0.05)}s` }}>
+                  <ProductCard
+                    product={product}
+                    onAddToCart={() => addToCart(product)}
+                    onViewDetails={() => navigate('/products')}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-12">
+              <Link
+                to="/products"
+                className="inline-flex items-center bg-fortex-dark dark:bg-fortex-primary text-white font-bold py-4 px-10 rounded-xl hover:bg-slate-800 dark:hover:bg-blue-600 transition shadow-lg shadow-slate-500/20 dark:shadow-blue-500/30 transform hover:-translate-y-1"
+              >
+                {t('featured_view_all')} <ArrowRight className="ml-2" size={20} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Services Section (Bosh sahifaga ko'chirilgan) */}
+      <ServicesSection />
 
       {/* Google Map Section */}
       <div id="location" className="py-20 bg-white dark:bg-slate-900 relative transition-colors">

@@ -5,6 +5,7 @@ import Modal from '../components/Modal';
 import { Search, Filter, Layers } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { sendReviewToTelegram } from '../services/telegram';
+import { handleImageError } from '../utils/image';
 
 interface ProductsProps {
   products: Product[];
@@ -369,6 +370,7 @@ const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
               <img
                 src={selectedProduct.image_url}
                 alt={selectedProduct.name}
+                onError={handleImageError}
                 className="max-h-96 object-contain drop-shadow-2xl z-10 transition duration-500 group-hover:scale-105 group-hover:-rotate-2 mix-blend-multiply"
               />
             </div>

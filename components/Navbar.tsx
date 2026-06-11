@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Globe, User, Moon, Sun } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ShoppingCart, Menu, X, Globe, Moon, Sun } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface NavbarProps {
@@ -13,9 +12,21 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { t, language, setLanguage } = useLanguage();
-  const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
+
+  // "Xizmatlar" Bosh sahifadagi bo'lim. Avval "/" ga o'tib, keyin bo'limga silliq scroll qilamiz.
+  const goToServices = () => {
+    setIsOpen(false);
+    const scroll = () => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+    if (location.pathname === '/') {
+      scroll();
+    } else {
+      navigate('/');
+      setTimeout(scroll, 350);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,9 +66,9 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
               <Link to="/products" className={`text-sm font-bold hover:text-white transition duration-300 uppercase tracking-wide ${location.pathname === '/products' ? 'text-white' : 'text-gray-400'}`}>
                 {t('products')}
               </Link>
-              <Link to="/services" className={`text-sm font-bold hover:text-white transition duration-300 uppercase tracking-wide ${location.pathname === '/services' ? 'text-white' : 'text-gray-400'}`}>
+              <button onClick={goToServices} className="text-sm font-bold hover:text-white transition duration-300 uppercase tracking-wide text-gray-400">
                 {t('services')}
-              </Link>
+              </button>
               <Link to="/admin" className={`text-sm font-bold hover:text-white transition duration-300 uppercase tracking-wide ${location.pathname === '/admin' ? 'text-white' : 'text-gray-400'}`}>
                 {t('admin')}
               </Link>
@@ -88,11 +99,6 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
                 </span>
               )}
             </Link>
-
-            {/* Profile Link */}
-            <Link to={user ? "/profile" : "/auth"} className={`relative p-3 rounded-full transition duration-300 group ${user ? 'bg-fortex-primary hover:bg-blue-500 shadow-lg shadow-blue-600/30' : 'bg-white/10 hover:bg-white/20'}`}>
-              <User size={24} className="text-white group-hover:scale-110 transition duration-300" />
-            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -108,9 +114,8 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
           <div className="flex flex-col p-6 space-y-4">
             <Link to="/" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('home')}</Link>
             <Link to="/products" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('products')}</Link>
-            <Link to="/services" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('services')}</Link>
+            <button onClick={goToServices} className="text-left text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition">{t('services')}</button>
             <Link to="/cart" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('cart')} ({cartCount})</Link>
-            <Link to={user ? "/profile" : "/auth"} className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{user ? t('auth_profile') : t('auth_login_register_nav')}</Link>
             <Link to="/admin" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('admin')}</Link>
 
             <div className="pt-4 border-t border-gray-800 flex justify-between space-x-4">

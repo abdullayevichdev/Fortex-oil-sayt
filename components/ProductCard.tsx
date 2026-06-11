@@ -1,6 +1,7 @@
 import React from 'react';
 import { Product } from '../types';
 import { ShoppingCart, Eye, Tag } from 'lucide-react';
+import { handleImageError } from '../utils/image';
 
 interface ProductCardProps {
   product: Product;
@@ -17,6 +18,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
         <img
           src={product.image_url}
           alt={product.name}
+          onError={handleImageError}
+          loading="lazy"
           className="max-h-full max-w-full object-contain drop-shadow-sm group-hover:scale-110 transition duration-500 mix-blend-multiply"
         />
 

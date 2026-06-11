@@ -39,6 +39,12 @@ export const translations = {
         os_price_from: "UZS dan",
         os_add_cart: "Savatga Qo'shish",
 
+        // Featured Products (Home)
+        featured_subtitle: "Tavsiya etamiz",
+        featured_title: "Eng Mashhur Mahsulotlar",
+        featured_desc: "Mijozlarimiz eng ko'p tanlaydigan premium toifadagi motor moylari.",
+        featured_view_all: "Barcha mahsulotlar",
+
         // Products Page
         prod_badge: "Premium Katalog",
         prod_title: "Barcha",
@@ -201,6 +207,12 @@ export const translations = {
         os_success_desc: "Для вашего {car} мы рекомендуем:",
         os_price_from: "от UZS",
         os_add_cart: "В Корзину",
+
+        // Featured Products (Home)
+        featured_subtitle: "Рекомендуем",
+        featured_title: "Самые Популярные Товары",
+        featured_desc: "Моторные масла премиум-класса, которые чаще всего выбирают наши клиенты.",
+        featured_view_all: "Все продукты",
 
         // Products Page
         prod_badge: "Премиум Каталог",

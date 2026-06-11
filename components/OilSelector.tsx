@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Product } from '../types';
 import { Search, ChevronRight, Droplet, Car, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { handleImageError } from '../utils/image';
 
 interface OilSelectorProps {
     products: Product[];
@@ -316,7 +317,7 @@ const OilSelector: React.FC<OilSelectorProps> = ({ products, onAddToCart }) => {
                                 {results.map((result) => (
                                     <div key={result.id} className="bg-blue-50/50 rounded-2xl p-6 border border-blue-100 hover:border-blue-300 transition-colors flex items-center space-x-4">
                                         <div className="w-20 h-20 bg-white rounded-xl p-2 shadow-sm border border-gray-100 flex-shrink-0">
-                                            <img src={result.image_url} alt={result.name} className="w-full h-full object-contain mix-blend-multiply" />
+                                            <img src={result.image_url} alt={result.name} onError={handleImageError} className="w-full h-full object-contain mix-blend-multiply" />
                                         </div>
                                         <div className="flex-grow">
                                             <div className="text-xs font-bold text-blue-500 uppercase mb-1">{result.category}</div>

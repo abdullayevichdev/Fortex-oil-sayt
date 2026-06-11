@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Calendar, Clock, Car, User, Phone, CheckCircle, Wrench, ShieldCheck, Zap, Loader2 } from 'lucide-react';
+import { Calendar, Clock, Car, User, Phone, CheckCircle, ShieldCheck, Zap, Loader2 } from 'lucide-react';
 import { sendBookingToTelegram } from '../services/telegram';
 
 interface BookingForm {
@@ -11,7 +11,8 @@ interface BookingForm {
     date: string;
 }
 
-const Services: React.FC = () => {
+// Bosh sahifaga ko'chirilgan "Xizmatlar" bo'limi (avvalgi alohida sahifa o'rniga)
+const ServicesSection: React.FC = () => {
     const { t } = useLanguage();
     const [formData, setFormData] = useState<BookingForm>({
         name: '',
@@ -28,7 +29,7 @@ const Services: React.FC = () => {
             id: 'oil_filter_change',
             icon: <Zap className="w-12 h-12 text-blue-500" />,
             title: t('serv_oil_filter'),
-            desc: t('serv_oil_desc'), // Can use combined desc later if needed, for now reuse oil desc or combine texts
+            desc: t('serv_oil_desc'),
             bg: 'bg-blue-50'
         },
         {
@@ -41,8 +42,7 @@ const Services: React.FC = () => {
     ];
 
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let val = e.target.value;
-        let digits = val.replace(/\D/g, '');
+        let digits = e.target.value.replace(/\D/g, '');
         if (!digits.startsWith('998')) digits = '998' + digits;
         if (digits.length > 12) digits = digits.slice(0, 12);
 
@@ -58,17 +58,10 @@ const Services: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-
         try {
             await sendBookingToTelegram(formData);
             setIsSuccess(true);
-            setFormData({
-                name: '',
-                phone: '+998 ',
-                carModel: '',
-                serviceType: 'oil_filter_change',
-                date: ''
-            });
+            setFormData({ name: '', phone: '+998 ', carModel: '', serviceType: 'oil_filter_change', date: '' });
         } catch (error) {
             console.error('Booking failed:', error);
             alert('Xatolik yuz berdi. Iltimos qaytadan urinib ko\'ring.');
@@ -78,34 +71,20 @@ const Services: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pb-20 transition-colors">
-            {/* Hero Section */}
-            <div className="relative pt-32 pb-24 bg-fortex-dark text-white overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-blue-900 opacity-90 z-10 transition-colors"></div>
-                <img
-                    src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
-                    alt="Car Service"
-                    className="absolute inset-0 w-full h-full object-cover opacity-30 animate-scale-in"
-                    style={{ animationDuration: '30s' }}
-                />
-
-                <div className="container mx-auto px-4 relative z-20 text-center">
-                    <div className="inline-block p-3 rounded-full bg-white/10 backdrop-blur-md mb-6 animate-fade-in-up">
-                        <Wrench size={32} className="text-blue-400" />
-                    </div>
-                    <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                        {t('serv_title')}
-                    </h1>
-                    <p className="text-xl text-gray-300 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                        {t('serv_subtitle')}
-                    </p>
+        <section id="services" className="py-20 bg-slate-50 dark:bg-slate-900 transition-colors">
+            <div className="container mx-auto px-4">
+                {/* Section Header */}
+                <div className="text-center mb-14 animate-fade-in-up">
+                    <span className="text-fortex-primary font-bold tracking-widest uppercase text-sm mb-2 block">{t('serv_subtitle')}</span>
+                    <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white">{t('serv_title')}</h2>
+                    <div className="w-20 h-1 bg-fortex-primary mx-auto mt-4 rounded-full"></div>
+                    <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mt-5">{t('serv_desc')}</p>
                 </div>
-            </div>
 
-            <div className="container mx-auto px-4 -mt-16 relative z-30">
+                {/* Service Cards */}
                 <div className="flex flex-wrap justify-center gap-8 mb-16">
                     {services.map((service, idx) => (
-                        <div key={service.id} className={`w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] max-w-sm bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 animate-fade-in-up border border-gray-100 dark:border-slate-700`} style={{ animationDelay: `${0.3 + (idx * 0.1)}s` }}>
+                        <div key={service.id} className="w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] max-w-sm bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 animate-fade-in-up border border-gray-100 dark:border-slate-700" style={{ animationDelay: `${0.1 + (idx * 0.1)}s` }}>
                             <div className={`w-20 h-20 rounded-2xl ${service.bg} dark:bg-opacity-20 flex items-center justify-center mb-6`}>
                                 {service.icon}
                             </div>
@@ -115,7 +94,8 @@ const Services: React.FC = () => {
                     ))}
                 </div>
 
-                <div className="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up border border-gray-100 dark:border-slate-700" style={{ animationDelay: '0.6s' }}>
+                {/* Booking Form */}
+                <div className="max-w-4xl mx-auto bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden animate-fade-in-up border border-gray-100 dark:border-slate-700">
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         <div className="p-8 lg:p-12">
                             <div className="flex items-center space-x-3 mb-8">
@@ -135,10 +115,7 @@ const Services: React.FC = () => {
                                     </div>
                                     <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">So'rovingiz Qabul Qilindi!</h3>
                                     <p className="text-gray-500 dark:text-gray-400 mb-6">Tez orada operatorlarimiz siz bilan bog'lanib, vaqtni tasdiqlashadi.</p>
-                                    <button
-                                        onClick={() => setIsSuccess(false)}
-                                        className="text-fortex-primary font-bold hover:underline"
-                                    >
+                                    <button onClick={() => setIsSuccess(false)} className="text-fortex-primary font-bold hover:underline">
                                         Yangi so'rov yuborish
                                     </button>
                                 </div>
@@ -176,7 +153,7 @@ const Services: React.FC = () => {
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
                                         <div>
-                                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 min-h-[40px] flex items-end">{t('serv_form_car')}</label>
+                                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">{t('serv_form_car')}</label>
                                             <div className="relative">
                                                 <Car className="absolute left-4 top-3.5 text-gray-400" size={20} />
                                                 <input
@@ -191,7 +168,7 @@ const Services: React.FC = () => {
                                         </div>
 
                                         <div>
-                                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 min-h-[40px] flex items-end">{t('serv_form_date')}</label>
+                                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">{t('serv_form_date')}</label>
                                             <div className="relative">
                                                 <Clock className="absolute left-4 top-3.5 text-gray-400" size={20} />
                                                 <input
@@ -256,8 +233,8 @@ const Services: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 
-export default Services;
+export default ServicesSection;

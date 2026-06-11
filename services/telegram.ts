@@ -1,11 +1,13 @@
 import { Order, Booking, Review } from '../types';
 
-// SIZNING BOT TOKENINGIZ
-const BOT_TOKEN = '7854422433:AAGpX1AjPOYDChjfIUV3bC3J6IX_ZDaArm4';
+// Maxfiy ma'lumotlar .env faylidan olinadi (manbaga yozilmaydi)
+const BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN || '';
 
-// DIQQAT: BU YERGA TELEGRAM ID RAQAMLARINI YOZING
-// Xabar shu 3 ta ID ga boradi
-const CHAT_IDS = ['5940982588', '7032656', '6464089189'];
+// Admin xabar boradigan Telegram ID lar (.env da vergul bilan ajratilgan)
+const CHAT_IDS = (import.meta.env.VITE_TELEGRAM_CHAT_IDS || '')
+  .split(',')
+  .map((id: string) => id.trim())
+  .filter(Boolean);
 
 // HTML maxsus belgilarini xavfsiz qilish (parse_mode: HTML xatolarini oldini oladi)
 const escapeHtml = (unsafe: string) => {

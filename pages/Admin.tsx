@@ -5,6 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGri
 import { jsPDF } from "jspdf";
 import { Settings, Package, ShoppingBag, LogOut, Edit, Trash, Plus, Lock, Image as ImageIcon, Home, ExternalLink, ChevronRight, FileText, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { handleImageError } from '../utils/image';
 
 const Admin: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -23,7 +24,8 @@ const Admin: React.FC = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === '1980') {
+    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || '1980';
+    if (password === adminPassword) {
       setIsAuthenticated(true);
     } else {
       alert("Noto'g'ri kod");
@@ -438,7 +440,7 @@ const Admin: React.FC = () => {
                         />
                         {editingProduct.image_url && (
                           <div className="w-12 h-12 rounded-lg border overflow-hidden flex-shrink-0">
-                            <img src={editingProduct.image_url} alt="Preview" className="w-full h-full object-cover" />
+                            <img src={editingProduct.image_url} alt="Preview" onError={handleImageError} className="w-full h-full object-cover" />
                           </div>
                         )}
                       </div>
@@ -463,7 +465,7 @@ const Admin: React.FC = () => {
                 <div key={p.id} className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-in-up" style={{ animationDelay: `${idx * 0.05}s` }}>
                   <div className="flex items-center space-x-6">
                     <div className="w-20 h-20 rounded-xl border border-gray-100 overflow-hidden bg-gray-50 p-2 flex-shrink-0">
-                      <img src={p.image_url} alt="" className="w-full h-full object-contain mix-blend-multiply" />
+                      <img src={p.image_url} alt="" onError={handleImageError} className="w-full h-full object-contain mix-blend-multiply" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2 mb-1">
@@ -546,7 +548,7 @@ const Admin: React.FC = () => {
                       <div key={idx} className="flex justify-between items-center py-2 border-b border-gray-200 last:border-0 text-sm">
                         <div className="flex items-center">
                           <span className="font-bold text-slate-400 mr-3 w-4">{idx + 1}.</span>
-                          <img src={item.product.image_url} className="w-8 h-8 object-contain mr-3 bg-white rounded border border-gray-200" alt="" />
+                          <img src={item.product.image_url} onError={handleImageError} className="w-8 h-8 object-contain mr-3 bg-white rounded border border-gray-200" alt="" />
                           <span className="font-bold text-slate-700">{item.product.name}</span>
                           <span className="text-gray-300 mx-2">|</span>
                           <span className="bg-white border px-2 py-0.5 rounded text-xs text-gray-600 font-medium">{item.selectedLiter}</span>
