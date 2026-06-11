@@ -115,14 +115,14 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
 
   if (orderComplete) {
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center text-center p-4">
-        <div className="bg-white p-12 rounded-3xl shadow-2xl animate-scale-in max-w-lg w-full">
-          <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 shadow-lg shadow-green-500/20">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col items-center justify-center text-center p-4 transition-colors">
+        <div className="bg-white dark:bg-slate-800 p-12 rounded-3xl shadow-2xl animate-scale-in max-w-lg w-full border border-transparent dark:border-slate-700">
+          <div className="w-24 h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 shadow-lg shadow-green-500/20">
             <CheckCircle size={48} />
           </div>
-          <h1 className="text-3xl font-black text-slate-800 mb-2">Buyurtma Qabul Qilindi!</h1>
-          <p className="text-gray-500 mb-6 font-medium">Buyurtma ID: <span className="font-mono bg-gray-100 px-2 py-1 rounded text-slate-700">{orderComplete}</span></p>
-          <p className="text-gray-600 mb-8 leading-relaxed">
+          <h1 className="text-3xl font-black text-slate-800 dark:text-white mb-2">Buyurtma Qabul Qilindi!</h1>
+          <p className="text-gray-500 dark:text-gray-400 mb-6 font-medium">Buyurtma ID: <span className="font-mono bg-gray-100 dark:bg-slate-700 px-2 py-1 rounded text-slate-700 dark:text-gray-200">{orderComplete}</span></p>
+          <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
             Sizning buyurtmangiz muvaffaqiyatli rasmiylashtirildi. Tez orada administratorlarimiz siz bilan bog'lanishadi. Chek avtomatik yuklab olindi.
           </p>
           <Link to="/" className="w-full block bg-fortex-primary text-white py-4 rounded-xl font-bold hover:bg-blue-600 transition shadow-lg shadow-blue-500/30">
@@ -135,13 +135,13 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col items-center justify-center p-4 transition-colors">
         <div className="text-center animate-fade-in-up">
-          <div className="bg-white p-8 rounded-full shadow-xl mb-8 inline-block">
-            <ShoppingBag size={64} className="text-gray-300" />
+          <div className="bg-white dark:bg-slate-800 p-8 rounded-full shadow-xl mb-8 inline-block">
+            <ShoppingBag size={64} className="text-gray-300 dark:text-slate-600" />
           </div>
-          <h2 className="text-4xl font-black text-slate-800 mb-4">Savatcha Bo'sh</h2>
-          <p className="text-gray-500 mb-8 text-lg max-w-md mx-auto">Avtomobilingiz uchun eng yaxshi moylarni tanlash uchun katalogga o'ting.</p>
+          <h2 className="text-4xl font-black text-slate-800 dark:text-white mb-4">Savatcha Bo'sh</h2>
+          <p className="text-gray-500 dark:text-gray-400 mb-8 text-lg max-w-md mx-auto">Avtomobilingiz uchun eng yaxshi moylarni tanlash uchun katalogga o'ting.</p>
           <Link to="/products" className="inline-flex items-center bg-fortex-primary text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-600 transition shadow-lg shadow-blue-500/30">
             <ArrowLeft className="mr-2" /> Mahsulotlarni Ko'rish
           </Link>
@@ -151,11 +151,11 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
   }
 
   return (
-    <div className="bg-slate-50 min-h-screen pt-28 pb-20">
+    <div className="bg-slate-50 dark:bg-slate-900 min-h-screen pt-28 pb-20 transition-colors">
       <div className="container mx-auto px-4">
 
         <div className="flex items-center justify-between mb-8 animate-fade-in">
-          <h1 className="text-3xl md:text-4xl font-black text-slate-800">{t('cart_title')}</h1>
+          <h1 className="text-3xl md:text-4xl font-black text-slate-800 dark:text-white">{t('cart_title')}</h1>
           <span className="bg-blue-100 text-fortex-primary px-4 py-2 rounded-full font-bold text-sm shadow-sm">{cart.reduce((a, c) => a + c.quantity, 0)} {t('items_suffix')}</span>
         </div>
 
@@ -164,26 +164,26 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
           {/* Cart Items List */}
           <div className="lg:col-span-2 space-y-4 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             {cart.map((item, idx) => (
-              <div key={`${item.product.id}-${item.selectedLiter}`} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6 flex flex-col md:flex-row items-center hover:shadow-md transition duration-300">
-                <div className="w-24 h-24 bg-gray-50 rounded-xl p-2 flex-shrink-0 border border-gray-50 mb-4 md:mb-0">
+              <div key={`${item.product.id}-${item.selectedLiter}`} className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-4 md:p-6 flex flex-col md:flex-row items-center hover:shadow-md transition duration-300">
+                <div className="w-24 h-24 bg-gray-50 dark:bg-slate-200 rounded-xl p-2 flex-shrink-0 border border-gray-50 dark:border-slate-600 mb-4 md:mb-0">
                   <img src={item.product.image_url} alt={item.product.name} className="w-full h-full object-contain mix-blend-multiply" />
                 </div>
 
                 <div className="flex-grow text-center md:text-left md:ml-6">
                   <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
-                    <span className="text-xs font-bold text-blue-500 bg-blue-50 px-2 py-0.5 rounded uppercase">{item.product.category}</span>
+                    <span className="text-xs font-bold text-blue-500 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded uppercase">{item.product.category}</span>
                   </div>
-                  <h3 className="font-bold text-slate-800 text-lg">{item.product.name}</h3>
-                  <p className="text-sm text-gray-500 font-medium mt-1">{t('size')}: <span className="text-slate-700 bg-gray-100 px-2 rounded">{item.selectedLiter}</span></p>
+                  <h3 className="font-bold text-slate-800 dark:text-white text-lg">{item.product.name}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 font-medium mt-1">{t('size')}: <span className="text-slate-700 dark:text-gray-200 bg-gray-100 dark:bg-slate-700 px-2 rounded">{item.selectedLiter}</span></p>
                   <p className="text-fortex-primary font-black text-lg mt-2 md:hidden">{item.selectedPrice.toLocaleString()} UZS</p>
                 </div>
 
                 <div className="flex flex-col items-end gap-4 mt-4 md:mt-0 w-full md:w-auto">
                   <p className="text-fortex-primary font-black text-xl hidden md:block">{item.selectedPrice.toLocaleString()} <span className="text-xs text-gray-400 font-normal">UZS</span></p>
-                  <div className="flex items-center justify-between w-full md:w-auto bg-gray-50 rounded-xl p-1 border border-gray-200">
-                    <button onClick={() => updateQuantity(item.product.id, item.selectedLiter, -1)} className="w-8 h-8 flex items-center justify-center rounded-lg bg-white shadow-sm hover:bg-gray-100 transition text-gray-600 font-bold disabled:opacity-50"><Minus size={14} /></button>
-                    <span className="font-bold w-10 text-center text-slate-800">{item.quantity}</span>
-                    <button onClick={() => updateQuantity(item.product.id, item.selectedLiter, 1)} className="w-8 h-8 flex items-center justify-center rounded-lg bg-white shadow-sm hover:bg-gray-100 transition text-gray-600 font-bold"><Plus size={14} /></button>
+                  <div className="flex items-center justify-between w-full md:w-auto bg-gray-50 dark:bg-slate-700 rounded-xl p-1 border border-gray-200 dark:border-slate-600">
+                    <button onClick={() => updateQuantity(item.product.id, item.selectedLiter, -1)} className="w-8 h-8 flex items-center justify-center rounded-lg bg-white dark:bg-slate-600 shadow-sm hover:bg-gray-100 dark:hover:bg-slate-500 transition text-gray-600 dark:text-gray-200 font-bold disabled:opacity-50"><Minus size={14} /></button>
+                    <span className="font-bold w-10 text-center text-slate-800 dark:text-white">{item.quantity}</span>
+                    <button onClick={() => updateQuantity(item.product.id, item.selectedLiter, 1)} className="w-8 h-8 flex items-center justify-center rounded-lg bg-white dark:bg-slate-600 shadow-sm hover:bg-gray-100 dark:hover:bg-slate-500 transition text-gray-600 dark:text-gray-200 font-bold"><Plus size={14} /></button>
                   </div>
                   <button onClick={() => updateQuantity(item.product.id, item.selectedLiter, -1000)} className="text-red-400 hover:text-red-600 text-xs font-bold flex items-center transition"><Trash2 size={14} className="mr-1" /> {t('remove')}</button>
                 </div>
@@ -199,14 +199,14 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
 
           {/* Checkout Section */}
           <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 sticky top-28">
-              <h2 className="text-xl font-black text-slate-800 mb-6 flex items-center">
+            <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-700 p-8 sticky top-28">
+              <h2 className="text-xl font-black text-slate-800 dark:text-white mb-6 flex items-center">
                 <span className="w-1 h-6 bg-fortex-primary rounded-full mr-3"></span>
                 Buyurtmani Rasmiylashtirish
               </h2>
 
-              <div className="flex justify-between items-center mb-6 pb-6 border-b border-gray-100">
-                <span className="text-gray-500 font-medium">Jami summa:</span>
+              <div className="flex justify-between items-center mb-6 pb-6 border-b border-gray-100 dark:border-slate-700">
+                <span className="text-gray-500 dark:text-gray-400 font-medium">Jami summa:</span>
                 <span className="text-3xl font-black text-fortex-primary">{totalAmount.toLocaleString()} <span className="text-sm text-gray-400 font-medium">UZS</span></span>
               </div>
 
@@ -216,7 +216,7 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
                   <input
                     required
                     type="text"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition font-medium text-slate-800"
+                    className="w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl px-4 py-3 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition font-medium text-slate-800 dark:text-white dark:placeholder-gray-500"
                     value={formData.fullName}
                     onChange={e => setFormData({ ...formData, fullName: e.target.value })}
                     placeholder="Ism Familiya"
@@ -228,7 +228,7 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
                   <input
                     required
                     type="tel"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition font-medium text-slate-800"
+                    className="w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl px-4 py-3 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition font-medium text-slate-800 dark:text-white dark:placeholder-gray-500"
                     value={formData.phone}
                     onChange={handlePhoneChange}
                     placeholder="+998 90 123 45 67"

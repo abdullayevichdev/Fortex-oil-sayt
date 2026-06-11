@@ -134,7 +134,7 @@ const Services: React.FC = () => {
                                         <CheckCircle size={40} />
                                     </div>
                                     <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">So'rovingiz Qabul Qilindi!</h3>
-                                    <p className="text-gray-500 dark:text-gray-400 mb-6">Tez orada operatorlarimiz siz bilan bog'lanib, vaqtni tasqlashadi.</p>
+                                    <p className="text-gray-500 dark:text-gray-400 mb-6">Tez orada operatorlarimiz siz bilan bog'lanib, vaqtni tasdiqlashadi.</p>
                                     <button
                                         onClick={() => setIsSuccess(false)}
                                         className="text-fortex-primary font-bold hover:underline"

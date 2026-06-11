@@ -51,7 +51,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
             <span className="text-xs text-gray-400 font-medium mb-1">Boshlang'ich narx:</span>
             <div className="flex items-baseline">
               <span className="text-2xl font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition duration-300">
-                {product.price_uzs[0].toLocaleString()}
+                {(product.price_uzs[0] ?? 0).toLocaleString()}
               </span>
               <span className="text-sm text-gray-500 dark:text-gray-400 ml-1 font-medium">UZS</span>
             </div>

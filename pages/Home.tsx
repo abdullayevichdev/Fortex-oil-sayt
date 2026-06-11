@@ -39,9 +39,13 @@ const Home: React.FC<HomeProps> = ({ products, addToCart }) => {
               <Link to="/products" className="group bg-fortex-primary hover:bg-blue-600 text-white font-bold py-4 px-10 rounded-lg transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center">
                 {t('hero_btn_catalog')} <ArrowRight className="ml-2 group-hover:translate-x-1 transition" />
               </Link>
-              <a href="#location" className="px-10 py-4 rounded-lg border border-white/20 hover:bg-white/10 transition flex items-center justify-center font-bold">
+              <button
+                type="button"
+                onClick={() => document.getElementById('location')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-10 py-4 rounded-lg border border-white/20 hover:bg-white/10 transition flex items-center justify-center font-bold"
+              >
                 {t('hero_btn_location')}
-              </a>
+              </button>
             </div>
           </div>
         </div>

@@ -7,6 +7,14 @@ const BOT_TOKEN = '7854422433:AAGpX1AjPOYDChjfIUV3bC3J6IX_ZDaArm4';
 // Xabar shu 3 ta ID ga boradi
 const CHAT_IDS = ['5940982588', '7032656', '6464089189'];
 
+// HTML maxsus belgilarini xavfsiz qilish (parse_mode: HTML xatolarini oldini oladi)
+const escapeHtml = (unsafe: string) => {
+  return String(unsafe ?? '')
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+};
+
 export const sendOrderToTelegram = async (order: Order) => {
   if (!CHAT_IDS || CHAT_IDS.length === 0) {
     console.error("Telegram CHAT_IDS kiritilmagan! services/telegram.ts faylini tekshiring.");
@@ -18,13 +26,13 @@ export const sendOrderToTelegram = async (order: Order) => {
   message += `🆔 ID: #${order.id}\n`;
   message += `📅 Sana: ${new Date(order.date).toLocaleString()}\n\n`;
 
-  message += `👤 <b>Mijoz:</b> ${order.customerName}\n`;
-  message += `📞 <b>Tel:</b> ${order.phone}\n`;
+  message += `👤 <b>Mijoz:</b> ${escapeHtml(order.customerName)}\n`;
+  message += `📞 <b>Tel:</b> ${escapeHtml(order.phone)}\n`;
   message += `💳 <b>To'lov turi:</b> ${order.paymentMethod === 'card' ? 'Karta (Click/Payme)' : 'Naqd pul'}\n\n`;
 
   message += `🛒 <b>Mahsulotlar:</b>\n`;
   order.items.forEach((item, index) => {
-    message += `${index + 1}. ${item.product.name} (${item.selectedLiter}) x ${item.quantity} ta\n`;
+    message += `${index + 1}. ${escapeHtml(item.product.name)} (${escapeHtml(item.selectedLiter)}) x ${item.quantity} ta\n`;
   });
 
   message += `\n💰 <b>JAMI: ${order.totalAmount.toLocaleString()} UZS</b>`;
@@ -45,8 +53,8 @@ export const sendOrderToTelegram = async (order: Order) => {
 
       // 2-qadam: Har bir mahsulot rasmini alohida yuborish
       for (const item of order.items) {
-        const caption = `<b>${item.product.name}</b>\n` +
-          `Hajm: ${item.selectedLiter}\n` +
+        const caption = `<b>${escapeHtml(item.product.name)}</b>\n` +
+          `Hajm: ${escapeHtml(item.selectedLiter)}\n` +
           `Soni: ${item.quantity} ta\n` +
           `Narx: ${(item.selectedPrice * item.quantity).toLocaleString()} UZS`;
 
@@ -80,10 +88,10 @@ export const sendBookingToTelegram = async (booking: Booking) => {
   };
 
   let message = `📝 <b>YANGI QABUL (BOOKING)</b>\n\n`;
-  message += `👤 <b>Mijoz:</b> ${booking.name}\n`;
-  message += `📞 <b>Tel:</b> ${booking.phone}\n`;
-  message += `🚘 <b>Avto:</b> ${booking.carModel}\n`;
-  message += `🛠 <b>Xizmat:</b> ${serviceNames[booking.serviceType] || booking.serviceType}\n`;
+  message += `👤 <b>Mijoz:</b> ${escapeHtml(booking.name)}\n`;
+  message += `📞 <b>Tel:</b> ${escapeHtml(booking.phone)}\n`;
+  message += `🚘 <b>Avto:</b> ${escapeHtml(booking.carModel)}\n`;
+  message += `🛠 <b>Xizmat:</b> ${escapeHtml(serviceNames[booking.serviceType] || booking.serviceType)}\n`;
   message += `📅 <b>Vaqt:</b> ${new Date(booking.date).toLocaleString()}\n`;
 
   try {
@@ -102,16 +110,6 @@ export const sendBookingToTelegram = async (booking: Booking) => {
     console.error("Booking telegramga yuborilmadi:", error);
   }
 };
-
-// Helper to escape HTML characters
-const escapeHtml = (unsafe: string) => {
-  return unsafe
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
 
 export const sendReviewToTelegram = async (review: Review, productName: string) => {
   if (!CHAT_IDS || CHAT_IDS.length === 0) return;
