@@ -2,6 +2,7 @@ import React from 'react';
 import { Product } from '../types';
 import { ShoppingCart, Eye, Tag } from 'lucide-react';
 import { handleImageError } from '../utils/image';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface ProductCardProps {
   product: Product;
@@ -10,6 +11,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewDetails }) => {
+  const { t } = useLanguage();
   return (
     <div className="group bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full border border-gray-100 dark:border-slate-700 overflow-hidden relative">
 
@@ -27,12 +29,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
         <div className="absolute top-3 left-3 flex flex-col gap-2">
           {product.tags.includes("Sale") && (
             <span className="bg-orange-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg shadow-orange-500/30 flex items-center">
-              <Tag size={10} className="mr-1" /> CHEGIRMA
+              <Tag size={10} className="mr-1" /> {t('sale')}
             </span>
           )}
           {product.tags.includes("New") && (
             <span className="bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg shadow-blue-600/30">
-              YANGI
+              {t('new')}
             </span>
           )}
         </div>
@@ -51,7 +53,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
 
         <div className="mt-auto pt-4 border-t border-gray-50 dark:border-slate-700">
           <div className="flex flex-col mb-4">
-            <span className="text-xs text-gray-400 font-medium mb-1">Boshlang'ich narx:</span>
+            <span className="text-xs text-gray-400 font-medium mb-1">{t('price_start')}</span>
             <div className="flex items-baseline">
               <span className="text-2xl font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition duration-300">
                 {(product.price_uzs[0] ?? 0).toLocaleString()}
@@ -65,13 +67,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
               onClick={() => onViewDetails(product)}
               className="flex items-center justify-center py-2.5 px-3 border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-600 dark:text-white rounded-xl hover:bg-gray-50 dark:hover:bg-slate-600 hover:border-gray-300 dark:hover:border-slate-500 transition text-sm font-bold"
             >
-              <Eye size={18} className="mr-2" /> Ko'rish
+              <Eye size={18} className="mr-2" /> {t('view')}
             </button>
             <button
               onClick={() => onAddToCart(product)}
               className="flex items-center justify-center py-2.5 px-3 bg-fortex-primary text-white rounded-xl hover:bg-blue-700 transition text-sm font-bold shadow-lg shadow-blue-500/20 active:scale-95"
             >
-              <ShoppingCart size={18} className="mr-2" /> Savat
+              <ShoppingCart size={18} className="mr-2" /> {t('add_to_cart_short')}
             </button>
           </div>
         </div>

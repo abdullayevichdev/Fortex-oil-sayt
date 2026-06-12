@@ -121,13 +121,13 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
           <div className="w-24 h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 shadow-lg shadow-green-500/20">
             <CheckCircle size={48} />
           </div>
-          <h1 className="text-3xl font-black text-slate-800 dark:text-white mb-2">Buyurtma Qabul Qilindi!</h1>
-          <p className="text-gray-500 dark:text-gray-400 mb-6 font-medium">Buyurtma ID: <span className="font-mono bg-gray-100 dark:bg-slate-700 px-2 py-1 rounded text-slate-700 dark:text-gray-200">{orderComplete}</span></p>
+          <h1 className="text-3xl font-black text-slate-800 dark:text-white mb-2">{t('cart_success_title')}</h1>
+          <p className="text-gray-500 dark:text-gray-400 mb-6 font-medium">{t('order_id')} <span className="font-mono bg-gray-100 dark:bg-slate-700 px-2 py-1 rounded text-slate-700 dark:text-gray-200">{orderComplete}</span></p>
           <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-            Sizning buyurtmangiz muvaffaqiyatli rasmiylashtirildi. Tez orada administratorlarimiz siz bilan bog'lanishadi. Chek avtomatik yuklab olindi.
+            {t('cart_success_desc')}
           </p>
           <Link to="/" className="w-full block bg-fortex-primary text-white py-4 rounded-xl font-bold hover:bg-blue-600 transition shadow-lg shadow-blue-500/30">
-            Bosh Sahifaga Qaytish
+            {t('cart_home_btn')}
           </Link>
         </div>
       </div>
@@ -141,10 +141,10 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
           <div className="bg-white dark:bg-slate-800 p-8 rounded-full shadow-xl mb-8 inline-block">
             <ShoppingBag size={64} className="text-gray-300 dark:text-slate-600" />
           </div>
-          <h2 className="text-4xl font-black text-slate-800 dark:text-white mb-4">Savatcha Bo'sh</h2>
-          <p className="text-gray-500 dark:text-gray-400 mb-8 text-lg max-w-md mx-auto">Avtomobilingiz uchun eng yaxshi moylarni tanlash uchun katalogga o'ting.</p>
+          <h2 className="text-4xl font-black text-slate-800 dark:text-white mb-4">{t('cart_empty')}</h2>
+          <p className="text-gray-500 dark:text-gray-400 mb-8 text-lg max-w-md mx-auto">{t('cart_empty_desc')}</p>
           <Link to="/products" className="inline-flex items-center bg-fortex-primary text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-600 transition shadow-lg shadow-blue-500/30">
-            <ArrowLeft className="mr-2" /> Mahsulotlarni Ko'rish
+            <ArrowLeft className="mr-2" /> {t('cart_back')}
           </Link>
         </div>
       </div>
@@ -192,8 +192,8 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
             ))}
 
             <div className="flex justify-end pt-4">
-              <button onClick={clearCart} className="text-red-500 font-bold hover:bg-red-50 px-4 py-2 rounded-xl transition flex items-center">
-                <Trash2 size={18} className="mr-2" /> Savatchani Tozalash
+              <button onClick={clearCart} className="text-red-500 font-bold hover:bg-red-50 dark:hover:bg-red-900/20 px-4 py-2 rounded-xl transition flex items-center">
+                <Trash2 size={18} className="mr-2" /> {t('cart_clear')}
               </button>
             </div>
           </div>
@@ -203,29 +203,29 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
             <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-700 p-8 sticky top-28">
               <h2 className="text-xl font-black text-slate-800 dark:text-white mb-6 flex items-center">
                 <span className="w-1 h-6 bg-fortex-primary rounded-full mr-3"></span>
-                Buyurtmani Rasmiylashtirish
+                {t('cart_checkout')}
               </h2>
 
               <div className="flex justify-between items-center mb-6 pb-6 border-b border-gray-100 dark:border-slate-700">
-                <span className="text-gray-500 dark:text-gray-400 font-medium">Jami summa:</span>
+                <span className="text-gray-500 dark:text-gray-400 font-medium">{t('cart_total')}</span>
                 <span className="text-3xl font-black text-fortex-primary">{totalAmount.toLocaleString()} <span className="text-sm text-gray-400 font-medium">UZS</span></span>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">To'liq Ism</label>
+                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{t('cart_form_name')}</label>
                   <input
                     required
                     type="text"
                     className="w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl px-4 py-3 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition font-medium text-slate-800 dark:text-white dark:placeholder-gray-500"
                     value={formData.fullName}
                     onChange={e => setFormData({ ...formData, fullName: e.target.value })}
-                    placeholder="Ism Familiya"
+                    placeholder={t('placeholder_fullname')}
                     disabled={isSubmitting}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Telefon Raqam</label>
+                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{t('cart_form_phone')}</label>
                   <input
                     required
                     type="tel"
@@ -238,9 +238,9 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">To'lov Turi</label>
+                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">{t('cart_form_payment')}</label>
                   <div className="grid grid-cols-2 gap-3">
-                    <label className={`cursor-pointer rounded-xl p-3 border-2 transition-all flex flex-col items-center justify-center text-center ${formData.paymentMethod === 'cash' ? 'border-fortex-primary bg-blue-50 text-fortex-primary shadow-md' : 'border-gray-100 hover:bg-gray-50 text-gray-500'}`}>
+                    <label className={`cursor-pointer rounded-xl p-3 border-2 transition-all flex flex-col items-center justify-center text-center ${formData.paymentMethod === 'cash' ? 'border-fortex-primary bg-blue-50 dark:bg-blue-900/20 text-fortex-primary shadow-md' : 'border-gray-100 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-500 dark:text-gray-400'}`}>
                       <input
                         type="radio"
                         name="payment"
@@ -253,7 +253,7 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
                       <Banknote size={24} className="mb-2" />
                       <span className="text-sm font-bold">{t('cart_cash')}</span>
                     </label>
-                    <label className={`cursor-pointer rounded-xl p-3 border-2 transition-all flex flex-col items-center justify-center text-center ${formData.paymentMethod === 'card' ? 'border-fortex-primary bg-blue-50 text-fortex-primary shadow-md' : 'border-gray-100 hover:bg-gray-50 text-gray-500'}`}>
+                    <label className={`cursor-pointer rounded-xl p-3 border-2 transition-all flex flex-col items-center justify-center text-center ${formData.paymentMethod === 'card' ? 'border-fortex-primary bg-blue-50 dark:bg-blue-900/20 text-fortex-primary shadow-md' : 'border-gray-100 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-500 dark:text-gray-400'}`}>
                       <input
                         type="radio"
                         name="payment"
@@ -272,9 +272,9 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
                 {formData.paymentMethod === 'card' && (
                   <div className="bg-gradient-to-r from-slate-800 to-slate-900 p-5 rounded-2xl text-white shadow-lg animate-fade-in relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-10 -mt-10 blur-xl"></div>
-                    <p className="font-medium text-gray-400 text-xs uppercase mb-1">Karta raqam (Humo/Uzcard)</p>
+                    <p className="font-medium text-gray-400 text-xs uppercase mb-1">{t('cart_card_number')}</p>
                     <p className="font-mono text-xl tracking-widest font-bold text-shadow-sm">{COMPANY_INFO.card}</p>
-                    <p className="text-xs mt-3 text-gray-400">Fortex MCHJ hisob raqami</p>
+                    <p className="text-xs mt-3 text-gray-400">{t('cart_card_desc')}</p>
                   </div>
                 )}
 
@@ -285,7 +285,7 @@ const Cart: React.FC<CartProps> = ({ cart, updateQuantity, clearCart }) => {
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="animate-spin mr-2" /> Yuborilmoqda...
+                      <Loader2 className="animate-spin mr-2" /> {t('cart_submitting')}
                     </>
                   ) : (
                     t('cart_submit')

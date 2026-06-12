@@ -211,19 +211,19 @@ const OilSelector: React.FC<OilSelectorProps> = ({ products, onAddToCart }) => {
 
     return (
         <div className="relative z-40 -mt-10 mb-20 container mx-auto px-4">
-            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-blue-100/50">
+            <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden border border-blue-100/50 dark:border-slate-700 transition-colors">
                 {/* Decoration */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
 
                 <div className="p-8 md:p-10">
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8">
                         <div>
-                            <div className="inline-flex items-center space-x-2 bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+                            <div className="inline-flex items-center space-x-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
                                 <Car size={14} />
                                 <span>{t('os_badge')}</span>
                             </div>
-                            <h2 className="text-2xl md:text-3xl font-black text-slate-900">{t('os_title')}</h2>
-                            <p className="text-gray-500 mt-2">{t('os_desc')}</p>
+                            <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white">{t('os_title')}</h2>
+                            <p className="text-gray-500 dark:text-gray-400 mt-2">{t('os_desc')}</p>
                         </div>
 
                         {/* Steps Indicator */}
@@ -247,7 +247,7 @@ const OilSelector: React.FC<OilSelectorProps> = ({ products, onAddToCart }) => {
                             <select
                                 value={brand}
                                 onChange={e => { setBrand(e.target.value); setModel(''); setResults([]); }}
-                                className="w-full bg-gray-50 hover:bg-white border text-lg border-gray-200 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all appearance-none cursor-pointer font-bold text-slate-700"
+                                className="w-full bg-gray-50 dark:bg-slate-700 hover:bg-white dark:hover:bg-slate-600 border text-lg border-gray-200 dark:border-slate-600 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all appearance-none cursor-pointer font-bold text-slate-700 dark:text-white"
                             >
                                 <option value="">{t('os_select')}</option>
                                 {Object.keys(CAR_DATA).map(b => (
@@ -266,7 +266,7 @@ const OilSelector: React.FC<OilSelectorProps> = ({ products, onAddToCart }) => {
                                 value={model}
                                 onChange={e => { setModel(e.target.value); setResults([]); }}
                                 disabled={!brand}
-                                className="w-full bg-gray-50 hover:bg-white border text-lg border-gray-200 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all appearance-none cursor-pointer font-bold text-slate-700"
+                                className="w-full bg-gray-50 dark:bg-slate-700 hover:bg-white dark:hover:bg-slate-600 border text-lg border-gray-200 dark:border-slate-600 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all appearance-none cursor-pointer font-bold text-slate-700 dark:text-white"
                             >
                                 <option value="">{t('os_select_brand_first')}</option>
                                 {brand && CAR_DATA[brand].models.map(m => (
@@ -302,29 +302,29 @@ const OilSelector: React.FC<OilSelectorProps> = ({ products, onAddToCart }) => {
 
                     {/* Results Section */}
                     {results.length > 0 && (
-                        <div className="mt-8 pt-8 border-t border-dashed border-gray-200 animate-slide-up">
+                        <div className="mt-8 pt-8 border-t border-dashed border-gray-200 dark:border-slate-700 animate-slide-up">
                             <div className="flex items-center mb-6">
-                                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-4">
+                                <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-green-600 mr-4">
                                     <CheckCircle size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-slate-900 text-lg">Topilgan Variantlar:</h3>
-                                    <p className="text-gray-500 text-sm">{t('os_success_desc', { car: `${brand} ${model}` })}</p>
+                                    <h3 className="font-bold text-slate-900 dark:text-white text-lg">{t('os_found_title')}</h3>
+                                    <p className="text-gray-500 dark:text-gray-400 text-sm">{t('os_success_desc', { car: `${brand} ${model}` })}</p>
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {results.map((result) => (
-                                    <div key={result.id} className="bg-blue-50/50 rounded-2xl p-6 border border-blue-100 hover:border-blue-300 transition-colors flex items-center space-x-4">
-                                        <div className="w-20 h-20 bg-white rounded-xl p-2 shadow-sm border border-gray-100 flex-shrink-0">
+                                    <div key={result.id} className="bg-blue-50/50 dark:bg-slate-700/50 rounded-2xl p-6 border border-blue-100 dark:border-slate-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors flex items-center space-x-4">
+                                        <div className="w-20 h-20 bg-white dark:bg-slate-200 rounded-xl p-2 shadow-sm border border-gray-100 dark:border-slate-500 flex-shrink-0">
                                             <img src={result.image_url} alt={result.name} onError={handleImageError} className="w-full h-full object-contain mix-blend-multiply" />
                                         </div>
                                         <div className="flex-grow">
                                             <div className="text-xs font-bold text-blue-500 uppercase mb-1">{result.category}</div>
-                                            <h4 className="font-black text-slate-900 text-lg leading-tight mb-2">{result.name}</h4>
+                                            <h4 className="font-black text-slate-900 dark:text-white text-lg leading-tight mb-2">{result.name}</h4>
                                             <div className="flex items-baseline space-x-2">
-                                                <span className="font-bold text-slate-700">{result.price_uzs[0].toLocaleString()}</span>
-                                                <span className="text-xs text-gray-500">{t('os_price_from')}</span>
+                                                <span className="font-bold text-slate-700 dark:text-gray-200">{(result.price_uzs[0] ?? 0).toLocaleString()}</span>
+                                                <span className="text-xs text-gray-500 dark:text-gray-400">{t('os_price_from')}</span>
                                             </div>
                                         </div>
                                         <div className="">

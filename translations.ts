@@ -156,6 +156,17 @@ export const translations = {
         reviews_submit: "Yuborish",
         reviews_submitting: "Yuborilmoqda...",
         reviews_empty: "Hozircha izohlar yo'q. Birinchi bo'lib fikr bildiring!",
+        review_thanks: "Izohingiz uchun rahmat!",
+
+        // Qo'shimcha (umumiy) kalitlar
+        add_to_cart_short: "Savat",
+        cart_card_number: "Karta raqam (Humo/Uzcard)",
+        placeholder_fullname: "Ism Familiya",
+        os_found_title: "Topilgan Variantlar:",
+        serv_success_title: "So'rovingiz Qabul Qilindi!",
+        serv_success_desc: "Tez orada operatorlarimiz siz bilan bog'lanib, vaqtni tasdiqlashadi.",
+        serv_new_request: "Yangi so'rov yuborish",
+        serv_car_placeholder: "Chevrolet Malibu 2",
 
         // Footer
         footer_desc: "Sifatli motor moylari va avtomobil texnik suyuqliklari.",
@@ -324,6 +335,17 @@ export const translations = {
         reviews_submit: "Отправить",
         reviews_submitting: "Отправка...",
         reviews_empty: "Пока нет отзывов. Будьте первым!",
+        review_thanks: "Спасибо за ваш отзыв!",
+
+        // Дополнительные (общие) ключи
+        add_to_cart_short: "В корзину",
+        cart_card_number: "Номер карты (Humo/Uzcard)",
+        placeholder_fullname: "Имя Фамилия",
+        os_found_title: "Найденные Варианты:",
+        serv_success_title: "Ваша Заявка Принята!",
+        serv_success_desc: "В ближайшее время наши операторы свяжутся с вами и подтвердят время.",
+        serv_new_request: "Отправить новую заявку",
+        serv_car_placeholder: "Chevrolet Malibu 2",
 
         // Footer
         footer_desc: "Качественные моторные масла и автомобильные технические жидкости.",

@@ -113,10 +113,10 @@ const ServicesSection: React.FC = () => {
                                     <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 animate-bounce-slow">
                                         <CheckCircle size={40} />
                                     </div>
-                                    <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">So'rovingiz Qabul Qilindi!</h3>
-                                    <p className="text-gray-500 dark:text-gray-400 mb-6">Tez orada operatorlarimiz siz bilan bog'lanib, vaqtni tasdiqlashadi.</p>
+                                    <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">{t('serv_success_title')}</h3>
+                                    <p className="text-gray-500 dark:text-gray-400 mb-6">{t('serv_success_desc')}</p>
                                     <button onClick={() => setIsSuccess(false)} className="text-fortex-primary font-bold hover:underline">
-                                        Yangi so'rov yuborish
+                                        {t('serv_new_request')}
                                     </button>
                                 </div>
                             ) : (
@@ -131,7 +131,7 @@ const ServicesSection: React.FC = () => {
                                                 value={formData.name}
                                                 onChange={e => setFormData({ ...formData, name: e.target.value })}
                                                 className="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition dark:text-white dark:placeholder-gray-500"
-                                                placeholder="Ism Familiya"
+                                                placeholder={t('placeholder_fullname')}
                                             />
                                         </div>
                                     </div>
@@ -162,7 +162,7 @@ const ServicesSection: React.FC = () => {
                                                     value={formData.carModel}
                                                     onChange={e => setFormData({ ...formData, carModel: e.target.value })}
                                                     className="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-fortex-primary focus:border-transparent outline-none transition dark:text-white dark:placeholder-gray-500"
-                                                    placeholder="Chevrolet Malibu 2"
+                                                    placeholder={t('serv_car_placeholder')}
                                                 />
                                             </div>
                                         </div>

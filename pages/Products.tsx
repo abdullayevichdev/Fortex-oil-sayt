@@ -100,7 +100,7 @@ const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
         rating: ((selectedProduct.rating || 5) * (selectedProduct.reviews?.length || 0) + reviewForm.rating) / ((selectedProduct.reviews?.length || 0) + 1)
       };
       setSelectedProduct(updatedProduct);
-      alert("Izohingiz uchun rahmat!");
+      alert(t('review_thanks'));
       setReviewForm({ name: '', rating: 5, comment: '' });
     } catch (e: any) {
       console.error(e);
@@ -344,7 +344,7 @@ const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
                   }}
                   className="mt-6 text-blue-600 font-bold hover:underline"
                 >
-                  Filtrlarni tozalash
+                  {t('filters_clear')}
                 </button>
               </div>
             )}
@@ -406,7 +406,7 @@ const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
               {/* Reviews Section */}
               <div className="mb-6 border-t border-gray-100 dark:border-gray-700 pt-6">
                 <h3 className="font-bold text-slate-800 dark:text-white mb-4 flex items-center justify-between">
-                  <span>Mijozlar Fikri ({selectedProduct.reviews?.length || 0})</span>
+                  <span>{t('reviews_title')} ({selectedProduct.reviews?.length || 0})</span>
                   <span className="text-yellow-500 flex items-center text-sm">
                     ⭐ {selectedProduct.rating?.toFixed(1) || '0.0'}
                   </span>
@@ -425,24 +425,24 @@ const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
                       </div>
                     ))
                   ) : (
-                    <p className="text-gray-400 text-sm italic">Hozircha izohlar yo'q. Birinchi bo'lib fikr bildiring!</p>
+                    <p className="text-gray-400 text-sm italic">{t('reviews_empty')}</p>
                   )}
                 </div>
               </div>
 
               {/* Add Review Form */}
               <form onSubmit={handleReviewSubmit} className="mb-6 bg-gray-50 dark:bg-slate-700 p-4 rounded-xl border border-gray-100 dark:border-gray-600">
-                <h4 className="font-bold text-sm mb-3 dark:text-white">Izoh qoldirish</h4>
+                <h4 className="font-bold text-sm mb-3 dark:text-white">{t('reviews_leave')}</h4>
                 <div className="space-y-3">
                   <input
                     required
                     className="w-full text-sm p-2 border rounded-lg outline-none focus:border-fortex-primary dark:bg-slate-600 dark:border-gray-500 dark:text-white"
-                    placeholder="Ismingiz"
+                    placeholder={t('reviews_name')}
                     value={reviewForm.name}
                     onChange={e => setReviewForm({ ...reviewForm, name: e.target.value })}
                   />
                   <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-500 dark:text-gray-400">Baho:</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">{t('reviews_rating')}</span>
                     {[1, 2, 3, 4, 5].map(star => (
                       <button type="button" key={star} onClick={() => setReviewForm({ ...reviewForm, rating: star })} className="text-lg focus:outline-none transition hover:scale-110">
                         {star <= reviewForm.rating ? '⭐' : '☆'}
@@ -452,12 +452,12 @@ const Products: React.FC<ProductsProps> = ({ products, addToCart }) => {
                   <textarea
                     required
                     className="w-full text-sm p-2 border rounded-lg outline-none focus:border-fortex-primary h-20 resize-none dark:bg-slate-600 dark:border-gray-500 dark:text-white"
-                    placeholder="Fikringiz..."
+                    placeholder={t('reviews_comment')}
                     value={reviewForm.comment}
                     onChange={e => setReviewForm({ ...reviewForm, comment: e.target.value })}
                   />
                   <button type="submit" disabled={isReviewSubmitting} className="w-full bg-slate-800 text-white py-2 rounded-lg text-sm font-bold hover:bg-slate-700 transition">
-                    {isReviewSubmitting ? 'Yuborilmoqda...' : 'Yuborish'}
+                    {isReviewSubmitting ? t('reviews_submitting') : t('reviews_submit')}
                   </button>
                 </div>
               </form>
