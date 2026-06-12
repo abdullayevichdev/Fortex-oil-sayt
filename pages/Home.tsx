@@ -33,11 +33,17 @@ const Home: React.FC<HomeProps> = ({ products, addToCart }) => {
     <div className="bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
       {/* Hero Section */}
       <div className="relative h-screen min-h-[600px] flex items-center overflow-hidden bg-fortex-dark text-white">
-        {/* Animated Background */}
-        <div className="absolute inset-0 z-0 opacity-30 animate-scale-in" style={{ animationDuration: '10s' }}>
-          <div className="w-full h-full bg-gradient-to-br from-blue-900 via-slate-900 to-black"></div>
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-fortex-dark via-fortex-dark/90 to-transparent z-10 transition-colors"></div>
+        {/* Background photo (public/fortex-store.jpg) */}
+        <img
+          src="/fortex-store.png"
+          alt="Fortex"
+          onError={(e) => { e.currentTarget.style.display = 'none'; }}
+          className="absolute inset-0 w-full h-full object-cover z-0 animate-scale-in"
+          style={{ animationDuration: '12s' }}
+        />
+        {/* To'q overlay - yozuvlar yaxshi ko'rinishi uchun */}
+        <div className="absolute inset-0 bg-gradient-to-r from-fortex-dark via-fortex-dark/85 to-fortex-dark/40 z-10 transition-colors"></div>
+        <div className="absolute inset-0 bg-black/40 z-10"></div>
 
         <div className="container mx-auto px-4 relative z-20 pt-16">
           <div className="max-w-3xl space-y-8">
