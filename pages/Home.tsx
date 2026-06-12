@@ -41,9 +41,8 @@ const Home: React.FC<HomeProps> = ({ products, addToCart }) => {
           className="absolute inset-0 w-full h-full object-cover z-0 animate-scale-in"
           style={{ animationDuration: '12s' }}
         />
-        {/* To'q overlay - yozuvlar yaxshi ko'rinishi uchun */}
-        <div className="absolute inset-0 bg-gradient-to-r from-fortex-dark via-fortex-dark/85 to-fortex-dark/40 z-10 transition-colors"></div>
-        <div className="absolute inset-0 bg-black/40 z-10"></div>
+        {/* Yengil overlay - rasm tiniq, lekin chap tomondagi yozuvlar o'qiladigan bo'lsin */}
+        <div className="absolute inset-0 bg-gradient-to-r from-fortex-dark/95 via-fortex-dark/60 to-fortex-dark/20 z-10 transition-colors"></div>
 
         <div className="container mx-auto px-4 relative z-20 pt-16">
           <div className="max-w-3xl space-y-8">

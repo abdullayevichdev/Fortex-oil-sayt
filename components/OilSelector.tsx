@@ -210,7 +210,7 @@ const OilSelector: React.FC<OilSelectorProps> = ({ products, onAddToCart }) => {
     };
 
     return (
-        <div className="relative z-40 -mt-10 mb-20 container mx-auto px-4">
+        <div className="relative z-40 mt-12 mb-20 container mx-auto px-4">
             <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden border border-blue-100/50 dark:border-slate-700 transition-colors">
                 {/* Decoration */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
