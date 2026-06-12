@@ -73,9 +73,9 @@ const Layout: React.FC = () => {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 font-sans">
+    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 font-sans overflow-x-hidden">
       {!isAdmin && <Navbar cartCount={totalItems} />}
-      <main className="flex-grow">
+      <main className="flex-grow w-full max-w-full">
         <Routes>
           <Route path="/" element={<Home products={products} addToCart={addToCart} />} />
           <Route path="/products" element={<Products products={products} addToCart={addToCart} />} />

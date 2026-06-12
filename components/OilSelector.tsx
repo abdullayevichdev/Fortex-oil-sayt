@@ -215,7 +215,7 @@ const OilSelector: React.FC<OilSelectorProps> = ({ products, onAddToCart }) => {
                 {/* Decoration */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
 
-                <div className="p-8 md:p-10">
+                <div className="p-5 sm:p-8 md:p-10">
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8">
                         <div>
                             <div className="inline-flex items-center space-x-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">

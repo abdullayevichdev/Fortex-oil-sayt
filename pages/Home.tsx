@@ -49,11 +49,11 @@ const Home: React.FC<HomeProps> = ({ products, addToCart }) => {
             <div className="inline-block px-4 py-1 border border-blue-500/50 rounded-full bg-blue-500/10 backdrop-blur-sm text-blue-400 text-sm font-bold uppercase tracking-wider animate-fade-in-up">
               {t('hero_badge')}
             </div>
-            <h1 className="text-5xl md:text-7xl font-black leading-tight animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black leading-tight animate-fade-in-up break-words" style={{ animationDelay: '0.1s' }}>
               {t('hero_title_1')} <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">{t('hero_title_2')}</span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               {t('hero_desc')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
