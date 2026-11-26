@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Product } from '../types';
 import { MapPin, ArrowRight, ShieldCheck, Zap, Award, Sparkles, Navigation } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -18,6 +18,39 @@ const FEATURED_IDS = ['p9', 'p10', 'p3', 'p15', 'p5', 'p1'];
 const Home: React.FC<HomeProps> = ({ products, addToCart }) => {
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const parallaxRef = useRef<HTMLDivElement>(null);
+
+  // Hero rasmi uchun parallax: sichqoncha va scroll bo'yicha yengil harakat
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let mx = 0, my = 0, cx = 0, cy = 0, raf = 0;
+    const onMove = (e: PointerEvent) => {
+      mx = (e.clientX / window.innerWidth - 0.5) * 2;
+      my = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    const loop = () => {
+      cx += (mx - cx) * 0.06;
+      cy += (my - cy) * 0.06;
+      const sy = Math.min(window.scrollY, window.innerHeight);
+      if (parallaxRef.current) {
+        parallaxRef.current.style.transform =
+          `translate3d(${(-cx * 18).toFixed(2)}px, ${(-cy * 12 + sy * 0.25).toFixed(2)}px, 0) scale(1.08)`;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('pointermove', onMove); };
+  }, []);
+
+  // Suzib yuruvchi yorug'lik zarrachalari (bir marta hisoblanadi)
+  const particles = React.useMemo(() => Array.from({ length: 22 }, (_, i) => ({
+    left: `${(i * 37) % 100}%`,
+    size: 2 + ((i * 7) % 5),
+    delay: `${-((i * 1.3) % 14)}s`,
+    duration: `${10 + ((i * 5) % 9)}s`,
+    drift: `${((i % 2 ? 1 : -1) * (10 + (i * 3) % 30))}px`,
+  })), []);
 
   // Tanlangan mahsulotlarni tartib bo'yicha olish; topilmasa birinchi 6 tasi bilan to'ldirish
   const featuredProducts = (() => {
@@ -41,16 +74,38 @@ const Home: React.FC<HomeProps> = ({ products, addToCart }) => {
     <div className="transition-colors duration-300">
       {/* Hero Section */}
       <div className="relative h-screen min-h-[600px] flex items-center overflow-hidden bg-fortex-dark text-white">
-        {/* Background photo (public/fortex-store.jpg) */}
-        <img
-          src="/fortex-store.png"
-          alt="Fortex"
-          onError={(e) => { e.currentTarget.style.display = 'none'; }}
-          className="absolute inset-0 w-full h-full object-cover z-0 animate-scale-in"
-          style={{ animationDuration: '12s' }}
-        />
+        {/* Background photo — HD (WebP + JPG zaxira), parallax qatlam ichida */}
+        <div ref={parallaxRef} className="absolute -inset-[4%] z-0 will-change-transform">
+          <div className="hero-kenburns absolute inset-0">
+            <picture>
+              <source srcSet="/fortex-store-hd.webp" type="image/webp" />
+              <img
+                src="/fortex-store-hd.jpg"
+                alt="Fortex"
+                fetchPriority="high"
+                decoding="async"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                className="absolute inset-0 w-full h-full object-cover z-0 animate-scale-in"
+                style={{ animationDuration: '12s' }}
+              />
+            </picture>
+          </div>
+        </div>
         {/* Yengil overlay - rasm tiniq, lekin chap tomondagi yozuvlar o'qiladigan bo'lsin */}
         <div className="absolute inset-0 bg-gradient-to-r from-fortex-dark/95 via-fortex-dark/60 to-fortex-dark/20 z-10 transition-colors"></div>
+
+        {/* Hero effektlari: yorug'lik nuri o'tishi, chekka soya va zarrachalar */}
+        <div className="hero-sweep absolute inset-0 z-10 pointer-events-none" aria-hidden="true"></div>
+        <div className="absolute inset-0 z-10 pointer-events-none shadow-[inset_0_0_180px_40px_rgba(2,6,23,0.55)]" aria-hidden="true"></div>
+        <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden" aria-hidden="true">
+          {particles.map((p, i) => (
+            <span
+              key={i}
+              className="hero-particle"
+              style={{ left: p.left, width: p.size, height: p.size, animationDelay: p.delay, animationDuration: p.duration, ['--drift' as any]: p.drift }}
+            />
+          ))}
+        </div>
 
         <div className="container mx-auto px-4 relative z-20 pt-16">
           <div className="max-w-3xl space-y-8">

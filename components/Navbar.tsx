@@ -105,15 +105,17 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
               <span key={theme} className="animate-scale-in">{theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}</span>
             </button>
 
-            {/* Cart */}
-            <Link to="/cart" className="btn-glow relative flex h-11 w-11 items-center justify-center rounded-full" aria-label={t('cart')}>
-              <ShoppingCart size={19} />
+            {/* Cart — badge tugmadan tashqarida, shuning uchun kesilmaydi */}
+            <div className="relative">
+              <Link to="/cart" className="btn-glow flex h-11 w-11 items-center justify-center rounded-full" aria-label={t('cart')}>
+                <ShoppingCart size={19} />
+              </Link>
               {cartCount > 0 && (
-                <span key={popKey} className="badge-pop absolute -top-1 -right-1 bg-gradient-to-br from-rose-500 to-orange-500 text-white text-[10px] font-bold rounded-full h-5 min-w-5 px-1 flex items-center justify-center ring-2 ring-slate-950 shadow-[0_0_12px_rgba(244,63,94,0.7)]">
-                  {cartCount}
+                <span key={popKey} className="badge-pop pointer-events-none absolute -top-1.5 -right-1.5 z-10 bg-gradient-to-br from-rose-500 to-orange-500 text-white text-[10px] font-bold leading-none rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center ring-2 ring-slate-950 shadow-[0_0_12px_rgba(244,63,94,0.7)]">
+                  {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}
-            </Link>
+            </div>
 
             {/* Mobile Menu Button */}
             <button
