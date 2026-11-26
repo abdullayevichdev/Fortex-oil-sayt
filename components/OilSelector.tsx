@@ -209,71 +209,74 @@ const OilSelector: React.FC<OilSelectorProps> = ({ products, onAddToCart }) => {
         }, 1500);
     };
 
-    return (
-        <div className="relative z-40 mt-12 mb-20 container mx-auto px-4">
-            <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden border border-blue-100/50 dark:border-slate-700 transition-colors">
-                {/* Decoration */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+    const selectCls = "field appearance-none cursor-pointer text-lg font-bold px-5 py-4 pr-12 rounded-2xl";
+    const step = (on: boolean) => `w-3 h-3 rounded-full transition-all duration-500 ${on ? 'bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)]' : 'bg-slate-300 dark:bg-slate-600'}`;
+    const bar = (on: boolean) => (
+        <div className="w-12 h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+            <div className={`h-full bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all duration-700 ${on ? 'w-full' : 'w-0'}`}></div>
+        </div>
+    );
 
-                <div className="p-5 sm:p-8 md:p-10">
-                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8">
+    return (
+        <div className="relative z-40 mt-12 mb-20 container mx-auto px-4 reveal">
+            <div className="glass glow-border rounded-[32px] transition-colors">
+                <span className="glow-halo"></span>
+                {/* Decoration */}
+                <div className="absolute -top-20 -right-10 w-72 h-72 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
+                <div className="absolute -bottom-24 -left-10 w-72 h-72 bg-cyan-400/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div className="relative p-5 sm:p-8 md:p-10">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
                         <div>
-                            <div className="inline-flex items-center space-x-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
-                                <Car size={14} />
-                                <span>{t('os_badge')}</span>
-                            </div>
-                            <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white">{t('os_title')}</h2>
-                            <p className="text-gray-500 dark:text-gray-400 mt-2">{t('os_desc')}</p>
+                            <span className="eyebrow mb-3"><Car size={13} /> {t('os_badge')}</span>
+                            <h2 className="text-2xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-white mt-3">{t('os_title')}</h2>
+                            <p className="text-slate-500 dark:text-slate-400 mt-2">{t('os_desc')}</p>
                         </div>
 
                         {/* Steps Indicator */}
-                        <div className="hidden md:flex items-center space-x-4">
-                            <div className={`w-3 h-3 rounded-full ${brand ? 'bg-green-500' : 'bg-gray-200'} transition-all`}></div>
-                            <div className={`w-12 h-1 bg-gray-100 rounded-full overflow-hidden`}>
-                                <div className={`h-full bg-green-500 transition-all duration-500 ${brand ? 'w-full' : 'w-0'}`}></div>
-                            </div>
-                            <div className={`w-3 h-3 rounded-full ${model ? 'bg-green-500' : 'bg-gray-200'} transition-all`}></div>
-                            <div className={`w-12 h-1 bg-gray-100 rounded-full overflow-hidden`}>
-                                <div className={`h-full bg-green-500 transition-all duration-500 ${model ? 'w-full' : 'w-0'}`}></div>
-                            </div>
-                            <div className={`w-3 h-3 rounded-full ${results.length > 0 ? 'bg-green-500' : 'bg-gray-200'} transition-all`}></div>
+                        <div className="hidden md:flex items-center gap-3 glass px-5 py-3 rounded-full">
+                            <div className={step(!!brand)}></div>
+                            {bar(!!brand)}
+                            <div className={step(!!model)}></div>
+                            {bar(!!model)}
+                            <div className={step(results.length > 0)}></div>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                         {/* Brand Selector */}
                         <div className="relative group">
-                            <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 ml-1">{t('os_brand')}</label>
+                            <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-[0.14em] mb-2 ml-1">{t('os_brand')}</label>
                             <select
                                 value={brand}
                                 onChange={e => { setBrand(e.target.value); setModel(''); setResults([]); }}
-                                className="w-full bg-gray-50 dark:bg-slate-700 hover:bg-white dark:hover:bg-slate-600 border text-lg border-gray-200 dark:border-slate-600 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all appearance-none cursor-pointer font-bold text-slate-700 dark:text-white"
+                                className={selectCls}
                             >
                                 <option value="">{t('os_select')}</option>
                                 {Object.keys(CAR_DATA).map(b => (
                                     <option key={b} value={b}>{b}</option>
                                 ))}
                             </select>
-                            <div className="absolute right-5 top-[42px] pointer-events-none text-gray-400 group-hover:text-blue-500 transition">
+                            <div className="absolute right-5 top-[42px] pointer-events-none text-slate-400 group-hover:text-blue-500 transition">
                                 <ChevronRight className="transform rotate-90" />
                             </div>
                         </div>
 
                         {/* Model Selector */}
-                        <div className={`relative group transition-all duration-300 ${!brand ? 'opacity-50 pointer-events-none grayscale' : 'opacity-100'}`}>
-                            <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 ml-1">{t('os_model')}</label>
+                        <div className={`relative group transition-all duration-500 ${!brand ? 'opacity-40 pointer-events-none blur-[1px]' : 'opacity-100'}`}>
+                            <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-[0.14em] mb-2 ml-1">{t('os_model')}</label>
                             <select
                                 value={model}
                                 onChange={e => { setModel(e.target.value); setResults([]); }}
                                 disabled={!brand}
-                                className="w-full bg-gray-50 dark:bg-slate-700 hover:bg-white dark:hover:bg-slate-600 border text-lg border-gray-200 dark:border-slate-600 rounded-2xl px-5 py-4 focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all appearance-none cursor-pointer font-bold text-slate-700 dark:text-white"
+                                className={selectCls}
                             >
                                 <option value="">{t('os_select_brand_first')}</option>
                                 {brand && CAR_DATA[brand].models.map(m => (
                                     <option key={m} value={m}>{m}</option>
                                 ))}
                             </select>
-                            <div className="absolute right-5 top-[42px] pointer-events-none text-gray-400 group-hover:text-blue-500 transition">
+                            <div className="absolute right-5 top-[42px] pointer-events-none text-slate-400 group-hover:text-blue-500 transition">
                                 <ChevronRight className="transform rotate-90" />
                             </div>
                         </div>
@@ -283,7 +286,7 @@ const OilSelector: React.FC<OilSelectorProps> = ({ products, onAddToCart }) => {
                             <button
                                 onClick={handleSearch}
                                 disabled={!brand || !model || loading}
-                                className="w-full h-[62px] bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-2xl font-bold text-lg shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:shadow-blue-600/40 hover:-translate-y-1 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:translate-y-0 flex items-center justify-center space-x-2"
+                                className="btn-glow w-full h-[62px] rounded-2xl font-bold text-lg flex items-center justify-center gap-2"
                             >
                                 {loading ? (
                                     <span className="flex items-center">
@@ -302,39 +305,39 @@ const OilSelector: React.FC<OilSelectorProps> = ({ products, onAddToCart }) => {
 
                     {/* Results Section */}
                     {results.length > 0 && (
-                        <div className="mt-8 pt-8 border-t border-dashed border-gray-200 dark:border-slate-700 animate-slide-up">
+                        <div className="mt-8 pt-8 border-t border-dashed border-slate-900/10 dark:border-white/10 animate-slide-up">
                             <div className="flex items-center mb-6">
-                                <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-green-600 mr-4">
-                                    <CheckCircle size={24} />
+                                <div className="w-11 h-11 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center text-white mr-4 shadow-[0_0_24px_rgba(52,211,153,0.55)]">
+                                    <CheckCircle size={22} />
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-slate-900 dark:text-white text-lg">{t('os_found_title')}</h3>
-                                    <p className="text-gray-500 dark:text-gray-400 text-sm">{t('os_success_desc', { car: `${brand} ${model}` })}</p>
+                                    <p className="text-slate-500 dark:text-slate-400 text-sm">{t('os_success_desc', { car: `${brand} ${model}` })}</p>
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {results.map((result) => (
-                                    <div key={result.id} className="bg-blue-50/50 dark:bg-slate-700/50 rounded-2xl p-6 border border-blue-100 dark:border-slate-600 hover:border-blue-300 dark:hover:border-blue-500 transition-colors flex items-center space-x-4">
-                                        <div className="w-20 h-20 bg-white dark:bg-slate-200 rounded-xl p-2 shadow-sm border border-gray-100 dark:border-slate-500 flex-shrink-0">
-                                            <img src={result.image_url} alt={result.name} onError={handleImageError} className="w-full h-full object-contain mix-blend-multiply" />
+                                {results.map((result, i) => (
+                                    <div key={result.id} className="glass spotlight group rounded-3xl p-4 sm:p-5 flex items-center gap-4 transition-all duration-500 hover:-translate-y-1 animate-fade-in-up opacity-0" style={{ animationDelay: `${i * 0.08}s` }}>
+                                        <div className="relative w-20 h-20 bg-gradient-to-b from-white to-slate-100 dark:from-slate-200 dark:to-slate-300 rounded-2xl p-2 flex-shrink-0 overflow-hidden flex items-center justify-center">
+                                            <span className="product-halo"></span>
+                                            <img src={result.image_url} alt={result.name} onError={handleImageError} className="relative w-full h-full object-contain mix-blend-multiply transition duration-500 group-hover:scale-110" />
                                         </div>
-                                        <div className="flex-grow">
-                                            <div className="text-xs font-bold text-blue-500 uppercase mb-1">{result.category}</div>
-                                            <h4 className="font-black text-slate-900 dark:text-white text-lg leading-tight mb-2">{result.name}</h4>
-                                            <div className="flex items-baseline space-x-2">
-                                                <span className="font-bold text-slate-700 dark:text-gray-200">{(result.price_uzs[0] ?? 0).toLocaleString()}</span>
-                                                <span className="text-xs text-gray-500 dark:text-gray-400">{t('os_price_from')}</span>
+                                        <div className="flex-grow min-w-0">
+                                            <div className="text-[11px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.12em] mb-1">{result.category}</div>
+                                            <h4 className="font-black text-slate-900 dark:text-white text-base sm:text-lg leading-tight mb-2 tracking-tight">{result.name}</h4>
+                                            <div className="flex items-baseline gap-2">
+                                                <span className="font-bold text-slate-700 dark:text-slate-200">{(result.price_uzs[0] ?? 0).toLocaleString()}</span>
+                                                <span className="text-xs text-slate-500 dark:text-slate-400">{t('os_price_from')}</span>
                                             </div>
                                         </div>
-                                        <div className="">
-                                            <button
-                                                onClick={() => onAddToCart(result)}
-                                                className="bg-slate-900 hover:bg-black text-white p-3 rounded-xl shadow-lg transition-all"
-                                            >
-                                                <Droplet size={18} />
-                                            </button>
-                                        </div>
+                                        <button
+                                            onClick={() => onAddToCart(result)}
+                                            className="btn-glow p-3 rounded-2xl flex-shrink-0"
+                                            aria-label={t('add_to_cart')}
+                                        >
+                                            <Droplet size={18} />
+                                        </button>
                                     </div>
                                 ))}
                             </div>
