@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import Cart from './pages/Cart';
 import Admin from './pages/Admin';
+import MotionFX from './components/MotionFX';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 
@@ -73,9 +74,10 @@ const Layout: React.FC = () => {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 font-sans overflow-x-hidden">
+    <div className="relative flex flex-col min-h-screen font-sans overflow-x-hidden text-slate-900 dark:text-slate-100">
+      {!isAdmin && <MotionFX />}
       {!isAdmin && <Navbar cartCount={totalItems} />}
-      <main className="flex-grow w-full max-w-full">
+      <main key={location.pathname} className="page-enter relative z-10 flex-grow w-full max-w-full">
         <Routes>
           <Route path="/" element={<Home products={products} addToCart={addToCart} />} />
           <Route path="/products" element={<Products products={products} addToCart={addToCart} />} />
@@ -83,7 +85,7 @@ const Layout: React.FC = () => {
           <Route path="/admin" element={<Admin />} />
         </Routes>
       </main>
-      {!isAdmin && <Footer />}
+      {!isAdmin && <div className="relative z-10"><Footer /></div>}
     </div>
   );
 };

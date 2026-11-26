@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Globe, Moon, Sun } from 'lucide-react';
+import { ShoppingCart, Menu, X, Globe, Moon, Sun, Droplets, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -36,117 +36,143 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Pages that have a dark Hero section at the top where navbar can be transparent
+  // Qorong'i hero bo'lmagan sahifalarda (masalan, Savat) kapsula doim to'q bo'ladi
   const isHeroPage = location.pathname === '/' || location.pathname === '/products';
+  const solid = scrolled || isOpen || !isHeroPage;
 
-  // Logic: 
-  // If scrolled -> dark background
-  // If NOT scrolled AND on Hero page -> transparent (text visible on dark image)
-  // If NOT scrolled AND NOT on Hero page (e.g. Cart) -> dark background (to make white text visible)
-  const useDarkBackground = scrolled || !isHeroPage;
+  // Savat raqami o'zgarganda "pop" animatsiyasi
+  const [popKey, setPopKey] = useState(0);
+  useEffect(() => { setPopKey(k => k + 1); }, [cartCount]);
+
+  // Mobil menyu ochiq bo'lsa, yo'nalish o'zgarganda yopish
+  useEffect(() => { setIsOpen(false); }, [location.pathname]);
+
+  const links = [
+    { to: '/', label: t('home') },
+    { to: '/products', label: t('products') },
+  ];
+
+  const pillLink = (active: boolean) =>
+    `relative px-4 py-2 rounded-full text-[13px] font-semibold tracking-wide transition-all duration-300 ${active
+      ? 'text-white bg-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_0_20px_rgba(59,130,246,0.35)]'
+      : 'text-white/70 hover:text-white hover:bg-white/10'}`;
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${useDarkBackground ? 'bg-fortex-dark/95 backdrop-blur-md shadow-lg py-3 dark:bg-slate-900/95' : 'bg-transparent py-6'
-      }`}>
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center">
+    <nav className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? 'pt-3' : 'pt-5'}`}>
+      <div className="container mx-auto px-3 sm:px-4">
+        <div
+          className={`relative flex justify-between items-center rounded-full pl-5 pr-2 py-2 transition-all duration-500 ${solid
+            ? 'bg-slate-950/70 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15)] border border-white/10'
+            : 'bg-slate-950/25 border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]'}`}
+          style={{ WebkitBackdropFilter: 'blur(24px) saturate(180%)', backdropFilter: 'blur(24px) saturate(180%)' }}
+        >
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <span className="text-3xl font-black italic tracking-tighter text-white animate-slide-in-left drop-shadow-md">
-              FORTEX<span className="text-blue-500">.UZ</span>
+          <Link to="/" className="flex items-center gap-2 group">
+            <span className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-[0_0_20px_rgba(59,130,246,0.6),inset_0_1px_0_rgba(255,255,255,0.4)] transition-transform duration-500 group-hover:rotate-[12deg] group-hover:scale-110">
+              <Droplets size={16} className="text-white" />
+            </span>
+            <span className="text-xl sm:text-2xl font-black italic tracking-tighter text-white">
+              FORTEX<span className="text-shimmer">.UZ</span>
             </span>
           </Link>
 
-          {/* Desktop Menu - Pill Style (Matches image 2) */}
-          <div className="hidden md:flex items-center space-x-8 animate-fade-in">
-            <div className="bg-white/5 backdrop-blur-sm px-6 py-2 rounded-full border border-white/10 flex items-center space-x-6 shadow-lg shadow-black/5 dark:bg-slate-800/50 dark:border-white/5">
-              <Link to="/" className={`text-sm font-bold hover:text-white transition duration-300 uppercase tracking-wide ${location.pathname === '/' ? 'text-white' : 'text-gray-400'}`}>
-                {t('home')}
-              </Link>
-              <Link to="/products" className={`text-sm font-bold hover:text-white transition duration-300 uppercase tracking-wide ${location.pathname === '/products' ? 'text-white' : 'text-gray-400'}`}>
-                {t('products')}
-              </Link>
-              <button onClick={goToServices} className="text-sm font-bold hover:text-white transition duration-300 uppercase tracking-wide text-gray-400">
-                {t('services')}
-              </button>
-              <Link to="/admin" className={`text-sm font-bold hover:text-white transition duration-300 uppercase tracking-wide ${location.pathname === '/admin' ? 'text-white' : 'text-gray-400'}`}>
-                {t('admin')}
-              </Link>
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-1">
+            {links.map(l => (
+              <Link key={l.to} to={l.to} className={pillLink(location.pathname === l.to)}>{l.label}</Link>
+            ))}
+            <button onClick={goToServices} className={pillLink(false)}>{t('services')}</button>
+            <Link to="/admin" className={pillLink(location.pathname === '/admin')}>{t('admin')}</Link>
+          </div>
 
-              {/* Language Switcher */}
-              <button
-                onClick={() => setLanguage(language === 'uz' ? 'ru' : 'uz')}
-                className="flex items-center space-x-1 text-sm font-bold text-gray-400 hover:text-white transition uppercase border-l border-white/10 pl-4"
-              >
-                <Globe size={16} />
-                <span>{language.toUpperCase()}</span>
-              </button>
+          <div className="flex items-center gap-1.5">
+            {/* Language Switcher */}
+            <button
+              onClick={() => setLanguage(language === 'uz' ? 'ru' : 'uz')}
+              className="hidden md:flex items-center gap-1.5 h-10 px-3 rounded-full text-[13px] font-bold text-white/80 hover:text-white hover:bg-white/10 transition"
+              aria-label="Til"
+            >
+              <Globe size={16} />
+              <span>{language.toUpperCase()}</span>
+            </button>
 
-              {/* Theme Toggle */}
-              <button
-                onClick={toggleTheme}
-                className="flex items-center space-x-1 text-sm font-bold text-gray-400 hover:text-yellow-400 transition uppercase border-l border-white/10 pl-4"
-              >
-                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-              </button>
-            </div>
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="hidden md:flex h-10 w-10 items-center justify-center rounded-full text-white/80 hover:text-yellow-300 hover:bg-white/10 transition"
+              aria-label="Mavzu"
+            >
+              <span key={theme} className="animate-scale-in">{theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}</span>
+            </button>
 
-            <Link to="/cart" className="relative p-3 bg-blue-600 hover:bg-blue-500 rounded-full transition duration-300 group shadow-lg shadow-blue-600/30 border border-blue-400/30">
-              <ShoppingCart size={24} className="text-white group-hover:scale-110 transition duration-300" />
+            {/* Cart */}
+            <Link to="/cart" className="btn-glow relative flex h-11 w-11 items-center justify-center rounded-full" aria-label={t('cart')}>
+              <ShoppingCart size={19} />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-fortex-dark">
+                <span key={popKey} className="badge-pop absolute -top-1 -right-1 bg-gradient-to-br from-rose-500 to-orange-500 text-white text-[10px] font-bold rounded-full h-5 min-w-5 px-1 flex items-center justify-center ring-2 ring-slate-950 shadow-[0_0_12px_rgba(244,63,94,0.7)]">
                   {cartCount}
                 </span>
               )}
             </Link>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden flex h-11 w-11 items-center justify-center rounded-full text-white bg-white/10 hover:bg-white/20 transition"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Menu"
+            >
+              <span key={String(isOpen)} className="animate-scale-in">{isOpen ? <X size={22} /> : <Menu size={22} />}</span>
+            </button>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button className="md:hidden text-white bg-white/10 p-2 rounded-lg backdrop-blur-sm hover:bg-white/20 transition" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
         </div>
-      </div>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-fortex-dark/95 backdrop-blur-xl border-t border-gray-800 animate-fade-in-up shadow-2xl dark:bg-slate-900/95 dark:border-gray-700">
-          <div className="flex flex-col p-6 space-y-4">
-            <Link to="/" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('home')}</Link>
-            <Link to="/products" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('products')}</Link>
-            <button onClick={goToServices} className="text-left text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition">{t('services')}</button>
-            <Link to="/cart" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('cart')} ({cartCount})</Link>
-            <Link to="/admin" className="text-gray-300 hover:text-fortex-primary text-lg font-medium p-2 hover:bg-white/5 rounded transition" onClick={() => setIsOpen(false)}>{t('admin')}</Link>
-
-            <div className="pt-4 border-t border-gray-800 flex justify-between space-x-4">
-              <button
-                onClick={() => {
-                  setLanguage(language === 'uz' ? 'ru' : 'uz');
-                  setIsOpen(false);
-                }}
-                className="flex-1 flex items-center justify-between text-gray-300 hover:text-white p-2 rounded hover:bg-white/5"
-              >
-                <div className="flex items-center"><Globe size={18} className="mr-2" /> {t('theme_lang')}</div>
-                <span className="bg-white/10 px-2 py-1 rounded text-sm font-bold">{language.toUpperCase()}</span>
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div
+            className="md:hidden mt-2 rounded-3xl border border-white/10 bg-slate-950/70 shadow-[0_20px_60px_-10px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] animate-scale-in origin-top"
+            style={{ WebkitBackdropFilter: 'blur(28px) saturate(180%)', backdropFilter: 'blur(28px) saturate(180%)' }}
+          >
+            <div className="flex flex-col p-3">
+              {[
+                { to: '/', label: t('home') },
+                { to: '/products', label: t('products') },
+              ].map((l, i) => (
+                <Link key={l.to} to={l.to} onClick={() => setIsOpen(false)} className="animate-fade-in-up opacity-0 flex items-center justify-between text-white/85 hover:text-white text-base font-semibold px-4 py-3 rounded-2xl hover:bg-white/10 transition" style={{ animationDelay: `${i * 0.05}s` }}>
+                  {l.label}<ChevronRight size={18} className="text-white/40" />
+                </Link>
+              ))}
+              <button onClick={goToServices} className="animate-fade-in-up opacity-0 flex items-center justify-between text-left text-white/85 hover:text-white text-base font-semibold px-4 py-3 rounded-2xl hover:bg-white/10 transition" style={{ animationDelay: '0.1s' }}>
+                {t('services')}<ChevronRight size={18} className="text-white/40" />
               </button>
+              <Link to="/cart" onClick={() => setIsOpen(false)} className="animate-fade-in-up opacity-0 flex items-center justify-between text-white/85 hover:text-white text-base font-semibold px-4 py-3 rounded-2xl hover:bg-white/10 transition" style={{ animationDelay: '0.15s' }}>
+                {t('cart')}<span className="text-xs font-bold bg-blue-500/30 text-blue-200 px-2.5 py-1 rounded-full">{cartCount}</span>
+              </Link>
+              <Link to="/admin" onClick={() => setIsOpen(false)} className="animate-fade-in-up opacity-0 flex items-center justify-between text-white/85 hover:text-white text-base font-semibold px-4 py-3 rounded-2xl hover:bg-white/10 transition" style={{ animationDelay: '0.2s' }}>
+                {t('admin')}<ChevronRight size={18} className="text-white/40" />
+              </Link>
 
-              <button
-                onClick={() => {
-                  toggleTheme();
-                  setIsOpen(false);
-                }}
-                className="flex-1 flex items-center justify-between text-gray-300 hover:text-white p-2 rounded hover:bg-white/5"
-              >
-                <div className="flex items-center">
-                  {theme === 'dark' ? <Sun size={18} className="mr-2" /> : <Moon size={18} className="mr-2" />}
-                  {t('theme_toggle')}
-                </div>
-                <span className="bg-white/10 px-2 py-1 rounded text-sm font-bold">{theme === 'dark' ? t('theme_dark') : t('theme_light')}</span>
-              </button>
+              <div className="mt-2 pt-3 border-t border-white/10 grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => { setLanguage(language === 'uz' ? 'ru' : 'uz'); setIsOpen(false); }}
+                  className="flex items-center justify-between text-white/80 hover:text-white px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 transition"
+                >
+                  <span className="flex items-center text-sm font-semibold"><Globe size={16} className="mr-2" />{t('theme_lang')}</span>
+                  <span className="text-xs font-bold">{language.toUpperCase()}</span>
+                </button>
+                <button
+                  onClick={() => { toggleTheme(); setIsOpen(false); }}
+                  className="flex items-center justify-between text-white/80 hover:text-white px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 transition"
+                >
+                  <span className="flex items-center text-sm font-semibold">
+                    {theme === 'dark' ? <Sun size={16} className="mr-2" /> : <Moon size={16} className="mr-2" />}
+                    {theme === 'dark' ? t('theme_dark') : t('theme_light')}
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </nav>
   );
 };

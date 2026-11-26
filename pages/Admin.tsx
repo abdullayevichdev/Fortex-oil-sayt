@@ -126,21 +126,23 @@ const Admin: React.FC = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900 relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center bg-slate-950 relative overflow-hidden p-4">
         {/* Animated Background */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-[-20%] left-[-20%] w-[50%] h-[50%] bg-blue-600/30 rounded-full blur-[100px] animate-pulse"></div>
-          <div className="absolute bottom-[-20%] right-[-20%] w-[50%] h-[50%] bg-purple-600/20 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-600/35 rounded-full blur-[120px] animate-float"></div>
+          <div className="absolute bottom-[-20%] right-[-10%] w-[55%] h-[55%] bg-violet-600/25 rounded-full blur-[120px] animate-float" style={{ animationDelay: '-3s' }}></div>
+          <div className="absolute top-[30%] right-[20%] w-[30%] h-[30%] bg-cyan-500/20 rounded-full blur-[100px]"></div>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-xl p-10 rounded-2xl shadow-2xl w-full max-w-md border border-white/20 z-10 animate-fade-in-up">
+        <div className="glass-dark glow-border p-8 sm:p-10 rounded-[32px] w-full max-w-md z-10 animate-scale-in">
+          <span className="glow-halo"></span>
           <div className="flex justify-center mb-6">
-            <div className="bg-fortex-primary p-4 rounded-full shadow-lg shadow-blue-500/50">
-              <Lock className="text-white" size={32} />
+            <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-4 rounded-2xl shadow-[0_0_40px_rgba(59,130,246,0.6),inset_0_1px_0_rgba(255,255,255,0.4)]">
+              <Lock className="text-white" size={30} />
             </div>
           </div>
           <h2 className="text-3xl font-black text-center mb-2 text-white tracking-tight">Admin Panel</h2>
-          <p className="text-center text-gray-400 mb-8 text-sm">Tizimga kirish uchun maxsus kodni kiriting</p>
+          <p className="text-center text-white/50 mb-8 text-sm">Tizimga kirish uchun maxsus kodni kiriting</p>
 
           <form onSubmit={handleLogin}>
             <input
@@ -148,10 +150,10 @@ const Admin: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Kirish kodi"
-              className="w-full bg-black/30 border border-white/10 text-white p-4 rounded-xl mb-6 text-center text-2xl tracking-[1em] focus:border-fortex-primary outline-none transition placeholder-gray-600"
+              className="w-full bg-white/5 border border-white/10 text-white p-4 rounded-2xl mb-6 text-center text-2xl tracking-[1em] focus:border-blue-400/70 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.2),0_0_30px_rgba(59,130,246,0.3)] outline-none transition placeholder-white/25 placeholder:tracking-normal placeholder:text-base"
               autoFocus
             />
-            <button className="w-full bg-fortex-primary hover:bg-blue-600 text-white py-4 rounded-xl font-bold transition shadow-lg shadow-blue-900/50">
+            <button className="btn-glow w-full py-4 rounded-2xl font-bold">
               Tizimga Kirish
             </button>
           </form>
@@ -163,10 +165,11 @@ const Admin: React.FC = () => {
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden font-sans">
       {/* Sidebar */}
-      <div className="w-72 bg-fortex-dark text-white flex flex-col shadow-2xl z-20 transition-all">
+      <div className="w-72 bg-slate-950 text-white flex flex-col shadow-[10px_0_40px_-10px_rgba(37,99,235,0.35)] z-20 transition-all relative overflow-hidden">
+        <div className="pointer-events-none absolute -top-20 -left-20 w-64 h-64 bg-blue-600/30 rounded-full blur-[80px]"></div>
         <div className="p-8 border-b border-gray-800">
           <span className="text-2xl font-black italic tracking-tighter text-white">
-            FORTEX<span className="text-blue-500">.UZ</span>
+            FORTEX<span className="text-shimmer">.UZ</span>
           </span>
           <p className="text-xs text-gray-500 mt-2 uppercase tracking-wider">Boshqaruv Paneli</p>
         </div>
@@ -174,19 +177,19 @@ const Admin: React.FC = () => {
           <p className="px-4 text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 mt-4">Menu</p>
           <button
             onClick={() => setActiveTab('dashboard')}
-            className={`w-full flex items-center p-3 rounded-xl transition-all duration-300 font-medium ${activeTab === 'dashboard' ? 'bg-fortex-primary text-white shadow-lg shadow-blue-900/50 translate-x-1' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+            className={`w-full flex items-center p-3 rounded-xl transition-all duration-300 font-medium ${activeTab === 'dashboard' ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-[0_0_24px_rgba(59,130,246,0.5),inset_0_1px_0_rgba(255,255,255,0.3)] translate-x-1' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
           >
             <Settings size={18} className="mr-3" /> Dashboard
           </button>
           <button
             onClick={() => setActiveTab('products')}
-            className={`w-full flex items-center p-3 rounded-xl transition-all duration-300 font-medium ${activeTab === 'products' ? 'bg-fortex-primary text-white shadow-lg shadow-blue-900/50 translate-x-1' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+            className={`w-full flex items-center p-3 rounded-xl transition-all duration-300 font-medium ${activeTab === 'products' ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-[0_0_24px_rgba(59,130,246,0.5),inset_0_1px_0_rgba(255,255,255,0.3)] translate-x-1' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
           >
             <Package size={18} className="mr-3" /> Mahsulotlar
           </button>
           <button
             onClick={() => setActiveTab('orders')}
-            className={`w-full flex items-center p-3 rounded-xl transition-all duration-300 font-medium ${activeTab === 'orders' ? 'bg-fortex-primary text-white shadow-lg shadow-blue-900/50 translate-x-1' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+            className={`w-full flex items-center p-3 rounded-xl transition-all duration-300 font-medium ${activeTab === 'orders' ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-[0_0_24px_rgba(59,130,246,0.5),inset_0_1px_0_rgba(255,255,255,0.3)] translate-x-1' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
           >
             <ShoppingBag size={18} className="mr-3" /> Buyurtmalar
           </button>
